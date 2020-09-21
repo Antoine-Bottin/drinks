@@ -11,7 +11,7 @@ var customerSchema = mongoose.Schema({
     zipCode:Number,
     city:String,
     phone:Number,
-    orders:{type:mongoose.Schema.Types.ObjectId, ref:orders}
+    orders:{type:mongoose.Schema.Types.ObjectId, ref:"orders"}
     
    });
 

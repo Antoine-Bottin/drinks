@@ -11,7 +11,7 @@ var productSchema = mongoose.Schema({
     priceTTC:Number,
     stock:Number,
     discount:Number,
-    picture:Buffer
+    picture:String
 
 
     

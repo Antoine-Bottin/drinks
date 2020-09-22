@@ -5,12 +5,12 @@ var customerSchema = mongoose.Schema({
     firstName: String,
     email:String,
     password:String,
-    salt:Number,
-    token:Number,
+    salt:String,
+    token:String,
     adress:String,
     zipCode:Number,
     city:String,
-    phone:Number,
+    phone:String,
     orders:{type:mongoose.Schema.Types.ObjectId, ref:"orders"}
     
    });

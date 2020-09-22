@@ -49,10 +49,11 @@ router.post('/newProduct', async function(req, res, next){
 router.post('/signUp', async function(req, res, next){
   var message;
   var result = false;
+  console.log("ReqBody",req.body)
 
   var searchCustomer = await customerModel.findOne({email: req.body.emailFromFront})    //Vérification que l'adresse mail n'est pas déja en base de données.
   if(searchCustomer !== null){
-    message = "Cette adresse email n'est pas disponible.";
+    message = "Cette adresse email n'est pas disponible, ou vous êtes déjà client";
     res.json({result, message});
   }else{
     res.json({result:true, message: "Nouveau client ajouté"})
@@ -63,24 +64,50 @@ router.post('/signUp', async function(req, res, next){
     var customerToken = uid2(32);
 
   var newCustomer = new customerModel ({                                                //Enregistrement du nouveau membre en BDD
-    lastName:req.body.lastNameFromFront,
     firstName:req.body.firstNameFromFront,
+    lastName:req.body.lastNameFromFront,
     email:req.body.emailFromFront,
     password:SHA256(req.body.passwordFromFront + salt).toString(encBase64),
+    confirmPassword:SHA256(req.body.confirmPasswordFromFront + salt).toString(encBase64),
     token:customerToken,
     salt:salt,
     adress:req.body.adressFromFront,
     zipCode:req.body.zipCodeFromFront,
     city:req.body.cityFromFront,
     phone:req.body.phoneFromFront,
+    //order:orderSaved._id
     
    });
 
    var customer = await newCustomer.save();	
-   console.log(customer);
-
-
-
+   console.log("==========",customer);
 })
+
+
+
+/*SignIn*/
+
+router.post('/signIn', async function(req, res, next){
+  var message;
+  var result;
+  var searchCustomer = await customerModel.findOne({email: req.body.emailFromFront})
+  console.log(searchCustomer)
+if (searchCustomer === null) {
+  message = "Email ou mot de passe incorrect."
+  result = false;
+} else {
+  var salt = searchCustomer.salt;
+  
+  if (SHA256(req.body.passwordFromFront + salt).toString(encBase64) === searchCustomer.password) {
+    result = true;
+  } else {
+    message = "Email ou mot de passe incorrect."
+    result = false;   
+  }
+}    
+
+res.json({result, message});
+});
+
 
 module.exports = router;

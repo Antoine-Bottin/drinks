@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import {Container, Row, Col, Button} from 'reactstrap';
-import {Link} from 'react-router-dom'
+import {Link,Redirect} from 'react-router-dom'
 
 
 
 
 function Menu() {
-    
-    
 
     // Les états et setteurs
 
@@ -16,6 +14,11 @@ function Menu() {
     let [basketIcon, setbasketIcon]=useState(false)
     let [accountIcon, setaccountIcon]=useState(false)
 
+    let [homeRedirect, setHomeRedirect]=useState(false)
+    let [shopRedirect, setShopRedirect]=useState(false)
+    let [basketRedirect, setBasketRedirect]=useState(false)
+    let [accountRedirect, setAccountRedirect]=useState(false)
+
     // Les actions des onClick{}
         //Sur le bouton home, ou bottle
     var handleClickHome=()=>(
@@ -23,7 +26,8 @@ function Menu() {
         sethomeIcon(true),
         setshopIcon(false),
         setbasketIcon(false),
-        setaccountIcon(false)   
+        setaccountIcon(false),
+        setHomeRedirect(true) 
     )
         //Sur le bouton potion
     var handleClickShop=()=>(
@@ -50,12 +54,15 @@ function Menu() {
         setaccountIcon(true)
     )
         
-    
+    console.log('homeIcon',homeIcon, "homeRedirect",homeRedirect)
         //Les conditions pour illuminer les icones.
 
-    let home='browser.svg'
+   let home='browser.svg'
     if (homeIcon){
-        home= 'browserBlue.svg'
+        home= 'browserBlue.svg';
+    }
+    if (homeRedirect){
+        return( <Redirect to='/home' />)
     }
     
     let shop='potion.svg'
@@ -91,10 +98,11 @@ function Menu() {
                 </Col>
                 <Col xs={12} md={6} > 
                         <Row className='col2'>
-                            <Link to='/home' ><img alt='icone Home' onClick={()=>handleClickHome()} className='menuIcon' src={home}/></Link>
-                            <Link to='/shop'><img alt='icone Shop'onClick={()=>handleClickShop()}className='menuIcon' src={shop}/></Link>
-                            <Link to='/basket'>2<img alt='icone Basket' onClick={()=>handleClickBasket()}className='menuIcon' src={basket}/></Link>
-                            <Link to='/account'><img alt='icone Account' onClick={()=>handleClickAccount()} className='menuIcon' src={account}/></Link>  
+                            
+                            <img alt='icone Home' onClick={()=>handleClickHome()} className='menuIcon' src={home}/>
+                            <img alt='icone Shop'onClick={()=>handleClickShop()}className='menuIcon' src={shop}/>
+                            2<img alt='icone Basket' onClick={()=>handleClickBasket()}className='menuIcon' src={basket}/>
+                            <img alt='icone Account' onClick={()=>handleClickAccount()} className='menuIcon' src={account}/>
                         </Row>
                 </Col>
             </Row>

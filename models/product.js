@@ -10,7 +10,8 @@ var productSchema = mongoose.Schema({
     priceHT:Number,
     priceTTC:Number,
     stock:Number,
-    discount:Number
+    discount:Number,
+    picture:Buffer
 
 
     

@@ -1,0 +1,225 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/*Composant Menu*/
+
+.menu {
+  background-color:#373F47;
+  min-height:100px;
+  width:20vw;
+}
+.Bottleicon{
+  height:45px;
+  width:45px;
+  position:absolute;
+  top:13px;
+  left:2px;
+}
+.col1{
+  padding-top:5px;
+  padding-left:15%;
+}
+.titleLetter{
+  font-family:'Candara Light';
+  font-size:50px;
+  color:#CFDEE7;
+}
+.titleLetterSmall{
+  font-family:'Candara Light';
+  font-size:20px;
+  color:#CFDEE7;
+  padding-top:45px;
+}
+.col2{
+  display:flex;
+  flex:auto;
+  padding-left:30vw;
+}
+.menuIcon{
+  height:35px;
+  width:35px;
+  margin: 30px 20px
+}
+.menuIcon:hover{
+  height:45px;
+  width:45px;
+  margin: 25px 10px;
+  transition-duration:1000;
+}
+
+
+
+/*Composant Home*/
+
+.background{
+  min-height:100vh;
+  width:100%;
+  background-color:#121D2B;
+  padding-bottom:30px
+
+}
+.carousel{
+  height:auto;
+  background-color:black;
+  margin-top:25vh;
+}
+.carouselImg{
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+.text{
+  display:flex;
+  flex-direction:column;
+  align-items:space-between;
+  
+}
+.quoteIconLeft{
+  height:35px;
+  width:35px;
+  margin:20px
+}
+.quoteIconRight{
+  height:35px;
+  width:35px;
+  margin-left:97%
+  
+}
+.lorem{
+  height:auto;
+  width:50%;
+  color:white;
+  font-size:15px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:10px;
+}
+.lorem::first-letter{
+  font-size:100px;
+}
+
+/*Composant Splash*/
+
+.backgroundSplash{
+  height:100vh;
+  width:100vw;
+  background-color:#121D2B;
+}
+.carouselSplash{
+  height:30vh;
+  background-color:black;
+  margin-top:25vh;
+}
+.carouselImgSplash{
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.allModal{
+  border-style:solid;
+  border-color:white
+}
+.divImg{
+  display:flex;
+  justify-content:center;
+  background-color:#121D2B;
+  
+}
+.modalImg{
+  margin-bottom:2vh;
+  margin-top:2vh;
+  height:45px;
+  width:45px;
+  
+}
+.modalTitle{
+  color:#CFDEE7;
+  text-align:center;
+  font-size:24px;
+  background-color:#121D2B
+}
+.modalBody{
+  color:#CFDEE7;
+  text-align:center;
+  font-size:15px;
+  background-color:#121D2B
+}
+.modalFooter{
+  color:#CFDEE7;
+  text-align:center;
+  background-color:#121D2B;
+  display:flex;
+  justify-content:space-between;
+  
+}
+.modalButton1{
+  padding-top:20px;
+  padding-bottom:20px;
+  
+}
+.modalButton{
+  padding-top:20px;
+  padding-bottom:20px;
+}
+
+
+/*Composant Shop*/
+
+.background{
+  min-height:100vh;
+  min-width:100vw;
+  background-color:#121D2B
+}
+.shopPage{
+  display:flex;
+}
+.filters{
+  width:auto;
+  text-align:center;
+  margin-top:5vh;
+  margin-right:50px;
+ /* margin-bottom:auto;*/
+}
+.title{
+  color:#CFDEE7;
+  font-family: Arial;
+  font-weight:thin;
+}
+
+.check{
+  display:flex;
+  flex-direction:column;
+  font-family:Candara Light;
+  font-size:15px;
+  color: #CFDEE7;
+  text-align:left;
+  margin-top:10px;
+  margin-left:10px;
+  margin-right:10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

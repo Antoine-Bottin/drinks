@@ -60,6 +60,7 @@ function Menu() {
    let home='browser.svg'
     if (homeIcon){
         home= 'browserBlue.svg';
+        sethomeIcon(false)
     }
     if (homeRedirect){
         return( <Redirect to='/home' />)
@@ -100,8 +101,8 @@ function Menu() {
                         <Row className='col2'>
                             
                             <img alt='icone Home' onClick={()=>handleClickHome()} className='menuIcon' src={home}/>
-                            <img alt='icone Shop'onClick={()=>handleClickShop()}className='menuIcon' src={shop}/>
-                            2<img alt='icone Basket' onClick={()=>handleClickBasket()}className='menuIcon' src={basket}/>
+                            <img alt='icone Shop'onClick={()=>handleClickShop()}className='menuIcon' src={shop}/>2
+                            <img alt='icone Basket' onClick={()=>handleClickBasket()}className='menuIcon' src={basket}/>
                             <img alt='icone Account' onClick={()=>handleClickAccount()} className='menuIcon' src={account}/>
                         </Row>
                 </Col>

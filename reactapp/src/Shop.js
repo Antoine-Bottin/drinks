@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Menu from "./Menu";
 import {Container,Row,Col,Form, FormGroup, Label,Input, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
@@ -7,72 +7,20 @@ import {Container,Row,Col,Form, FormGroup, Label,Input, Card, CardImg, CardBody,
 
 function Shop() {
 
-    var styles={
-        card:{
-           
-            marginTop:'20px',
-            marginBottom:'20px',
-            backgroundColor:'black',
-            
-        },
-        cardImg:{
-            height:'40%',
-            width:'40%',
-            margin:'auto',
-            marginTop:'5px'    
-        },
-        cardTitle:{
-            textAlign:'center',
-            color:'#CFDEE7'
-        },
-        cardText:{
-            color:'#CFDEE7'
-        },
-        cardSubtitle:{
-            display:'flex',
-            color:'#CFDEE7'
-        },
-        category:{
-            color:'#CFDEE7',
-            paddingBottom:'5px',
-            fontSize:'20px'
 
-        },
-        stock:{
-            color:'red',
-            fontSize:'20px',
-            fontWeight:'bold',
-            paddingLeft:'43%'
-        },
-        icon:{
-            height:"20px",
-            width:"20px",
-            marginLeft:'55%'
-        },
-        h3:{
-            color:'#CFDEE7',
-            fontFamily:'Candara Light',
-            fontSize:'20px',
-            paddingTop:'5px'
-        },
-        container:{
-            borderStyle:'solid',
-            borderColor:'white',
-            width:'auto',
-        },
+    const [selectedArticle, setSelectedArticle] = useState([{valeur:0,image:"", titre:"", prix:0}])
+
+    const handleClickBasket=(valeur, titre, prix)=>{
+        console.log("=========",valeur, titre, prix)
+        setSelectedArticle([...selectedArticle, [{valeur, titre, prix }]])
+        console.log(selectedArticle)
+    }
+    var styles={
         formGroup:{
             display:'flex',
             flexDirection:'column'
         },
-        check:{
-            fontFamily:'Candara Light',
-            fontSize:'15px',
-            color:'#CFDEE7',
-            textAlign:'left',
-            marginTop:'10px',
-            marginLeft:'10px',
-            marginRight:'10px'
-        },
+        
         range:{
             fontSize:'12px',
             color:'#CFDEE7',
@@ -86,9 +34,36 @@ function Shop() {
         
      }
 
-
+     var articleTab=[{cardImg:"bottle1.jpg",cardTitle:"Kraken",category:'Rhum',cardText:'pouet pouet', cardSubtitle:5, cardPrice:29.90},
+                     {cardImg:"bottle2.jpg", cardTitle:"Bacardi", category:"Rhum",cardText:'tiouf tiouf', cardSubtitle: 12, cardPrice:12.90},
+                     {cardImg:"bottle1.jpg", cardTitle:"Monkey42", category:"Gin",cardText:'tiouf tiouf', cardSubtitle: 11, cardPrice:22.90},
+                     {cardImg:"bottle2.jpg", cardTitle:"Beefeater", category:"Gin",cardText:'tiouf tiouf', cardSubtitle: 120, cardPrice:10.90},
+                     {cardImg:"bottle1.jpg", cardTitle:"Nikka", category:"Whisky",cardText:'tiouf tiouf', cardSubtitle: 1, cardPrice:32.90},
+                     {cardImg:"bottle2.jpg", cardTitle:"Belvedere", category:"Vodka",cardText:'tiouf tiouf', cardSubtitle: 50, cardPrice:19.90},
+                     {cardImg:"bottle1.jpg",cardTitle:"Kraken",category:'Rhum',cardText:'pouet pouet', cardSubtitle:5, cardPrice:29.90},
+                     {cardImg:"bottle2.jpg", cardTitle:"Bacardi", category:"Rhum",cardText:'tiouf tiouf', cardSubtitle: 12, cardPrice:12.90},
+                     {cardImg:"bottle1.jpg", cardTitle:"Monkey42", category:"Gin",cardText:'tiouf tiouf', cardSubtitle: 11, cardPrice:22.90},
+                     {cardImg:"bottle2.jpg", cardTitle:"Beefeater", category:"Gin",cardText:'tiouf tiouf', cardSubtitle: 120, cardPrice:10.90},
+                     {cardImg:"bottle1.jpg", cardTitle:"Nikka", category:"Whisky",cardText:'tiouf tiouf', cardSubtitle: 1, cardPrice:32.90},
+                     {cardImg:"bottle2.jpg", cardTitle:"Belvedere", category:"Vodka",cardText:'tiouf tiouf', cardSubtitle: 50, cardPrice:19.90}
+    ];
         
-    
+    var shop=[];
+    for(let i=0; i<articleTab.length; i++){
+        shop.push(
+        <Col  xs={12}  md={4} lg={2}>
+            <Card className='card' >
+                <CardImg className="cardImg" top width="100%" src={articleTab[i].cardImg} alt="Card image cap" />
+                <CardBody className="cardBody">
+                <CardTitle className="cardTitle">{articleTab[i].cardTitle}</CardTitle>
+                <CardSubtitle className='category'>{articleTab[i].category}</CardSubtitle>
+                <CardText className='cardText'>{articleTab[i].cardText}</CardText>
+                <CardSubtitle className="cardStock">Stock restant :<span className='cardStockNumber'>{articleTab[i].cardSubtitle}</span> </CardSubtitle>
+                <h3 className="price">{articleTab[i].cardPrice}€<img className='icon' src='smart-cartBlue.svg' cursor='pointer' onClick={()=>handleClickBasket({i},articleTab[i].cardImg,articleTab[i].cardTitle, articleTab[i].cardPrice)}></img></h3>
+                </CardBody>
+            </Card>
+        </Col>)
+    }
 
 
   return (
@@ -100,7 +75,7 @@ function Shop() {
                         <div className='title'>Filtres</div>
                         <FormGroup check>
                             <Label className='check' check>
-                            <Input  type="checkbox" id="checkbox1" />{' '}
+                            <Input  type="checkbox" id="checkbox1" onSelected/>{' '}
                             Gin
                             </Label>
                             <Label className='check' check>
@@ -131,67 +106,8 @@ function Shop() {
 {/* Articles */}
                 <Container fluid style={styles.container}>
                     <Row style={styles.allCard}>
-                        <Col  xs={10} md={3}>
-                            <Card style={styles.card}>
-                                <CardImg style={styles.cardImg} top width="100%" src="bottle1.jpg" alt="Card image cap" />
-                                <CardBody>
-                                <CardTitle style={styles.cardTitle}>Card title</CardTitle>
-                                <CardSubtitle style={styles.category}>Catégorie: Rhum</CardSubtitle>
-                                <CardText style = {styles.cardText}>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                <CardSubtitle style={styles.cardSubtitle}>Stock restant :<span style={styles.stock}>5</span> </CardSubtitle>
-                                <h3 style={styles.h3}>29,90€<img style={styles.icon} src='smart-cartBlue.svg'></img></h3>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col xs={10} md={3} >
-                            <Card style={styles.card}>
-                                <CardImg style={styles.cardImg} top width="100%" src="bottle1.jpg" alt="Card image cap" />
-                                <CardBody>
-                                <CardTitle style={styles.cardTitle}>Card title</CardTitle>
-                                <CardSubtitle style={styles.category}>Catégorie: Rhum</CardSubtitle>
-                                <CardText style = {styles.cardText}>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                <CardSubtitle style={styles.cardSubtitle}>Stock restant :<span style={styles.stock}>5</span> </CardSubtitle>
-                                <h3 style={styles.h3}>29,90€<img style={styles.icon} src='smart-cartBlue.svg'></img></h3>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col xs={10} md={3} >
-                            <Card style={styles.card}>
-                                <CardImg style={styles.cardImg} top width="100%" src="bottle1.jpg" alt="Card image cap" />
-                                <CardBody>
-                                <CardTitle style={styles.cardTitle}>Card title</CardTitle>
-                                <CardSubtitle style={styles.category}>Catégorie: Rhum</CardSubtitle>
-                                <CardText style = {styles.cardText}>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                <CardSubtitle style={styles.cardSubtitle}>Stock restant :<span style={styles.stock}>5</span> </CardSubtitle>
-                                <h3 style={styles.h3}>29,90€<img style={styles.icon} src='smart-cartBlue.svg'></img></h3>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col xs={10} md={3} >
-                            <Card style={styles.card}>
-                                <CardImg style={styles.cardImg} top width="100%" src="bottle1.jpg" alt="Card image cap" />
-                                <CardBody>
-                                <CardTitle style={styles.cardTitle}>Card title</CardTitle>
-                                <CardSubtitle style={styles.category}>Catégorie: Rhum</CardSubtitle>
-                                <CardText style = {styles.cardText}>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                <CardSubtitle style={styles.cardSubtitle}>Stock restant :<span style={styles.stock}>5</span> </CardSubtitle>
-                                <h3 style={styles.h3}>29,90€<img style={styles.icon} src='smart-cartBlue.svg'></img></h3>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col xs={10} md={3} >
-                            <Card style={styles.card}>
-                                <CardImg style={styles.cardImg} top width="100%" src="bottle1.jpg" alt="Card image cap" />
-                                <CardBody>
-                                <CardTitle style={styles.cardTitle}>Card title</CardTitle>
-                                <CardSubtitle style={styles.category}>Catégorie: Rhum</CardSubtitle>
-                                <CardText style = {styles.cardText}>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                <CardSubtitle style={styles.cardSubtitle}>Stock restant :<span style={styles.stock}>5</span> </CardSubtitle>
-                                <h3 style={styles.h3}>29,90€<img style={styles.icon} src='smart-cartBlue.svg'></img></h3>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        </Row>
+                        {shop} 
+                    </Row>
                 </Container>
         </div>
         

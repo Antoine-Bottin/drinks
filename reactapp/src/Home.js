@@ -71,6 +71,11 @@ function Home() {
               </p>
               <img src='RightquoteBlue.svg' className='quoteIconRight'/>
           </div>
+          <div>
+          <span className="pouet">L'abus d'alcool est dangeureux pour la santé, à consommer avec modération!</span>
+          </div>
+
+          
           
           
        

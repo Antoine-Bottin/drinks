@@ -5,6 +5,7 @@ var customerSchema = mongoose.Schema({
     firstName: String,
     email:String,
     password:String,
+    confirmPassword:String,
     salt:String,
     token:String,
     adress:String,

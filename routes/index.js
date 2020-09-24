@@ -21,9 +21,9 @@ router.get('/', function(req, res, next) {
 
 /*New Product*/
 
-router.post('/newProduct', async function(req, res, next){
+router.post('/newProduct', async function(req, res, next){                              //Ajout d'un nouvel article, idéalement route pour un back office
 
-  var newProduct = new productModel ({                                                  //Ajout d'un nouvel article, idéalement route pour un back office
+  var newProduct = new productModel ({                                                  
     name:req.body.nameFromFront,
     category:req.body.categoryFromFront,
     brand:req.body.brandFromFront,
@@ -46,19 +46,22 @@ router.post('/newProduct', async function(req, res, next){
 
 /*SignUp*/
 
-router.post('/signUp', async function(req, res, next){
+router.post('/signUp', async function(req, res, next){                                    
   var message;
   var result = false;
-  console.log("ReqBody",req.body)
 
-  var searchCustomer = await customerModel.findOne({email: req.body.emailFromFront})    //Vérification que l'adresse mail n'est pas déja en base de données.
-  if(searchCustomer !== null){
+  if (req.body.passwordFromFront !== req.body.confirmPasswordFromFront) {        //Vérification que les mots de passe sont identiques
+    message = "Les mots de passe ne sont pas identiques.";
+    res.json({result, message})
+  }else{
+    var searchCustomer = await customerModel.findOne({email: req.body.emailFromFront})    //Vérification que l'adresse mail n'est pas déja en base de données.
+    if(searchCustomer !== null){
     message = "Cette adresse email n'est pas disponible, ou vous êtes déjà client";
     res.json({result, message});
   }else{
     res.json({result:true, message: "Nouveau client ajouté"})
-  }
-
+  }}
+    console.log(result, message)
 
     var salt = uid2(32);
     var customerToken = uid2(32);
@@ -88,10 +91,9 @@ router.post('/signUp', async function(req, res, next){
 /*SignIn*/
 
 router.post('/signIn', async function(req, res, next){
-  var message;
+  var message="vous êtes connecté";
   var result;
   var searchCustomer = await customerModel.findOne({email: req.body.emailFromFront})
-  console.log(searchCustomer)
 if (searchCustomer === null) {
   message = "Email ou mot de passe incorrect."
   result = false;
@@ -107,6 +109,7 @@ if (searchCustomer === null) {
 }    
 
 res.json({result, message});
+console.log("le signIn",result, message)
 });
 
 

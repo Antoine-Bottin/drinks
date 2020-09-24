@@ -12,6 +12,19 @@ function Sign() {
    const [signInEmail, setSignInEmail] = useState('');
    const [signInPassword, setSignInPassword] = useState('');
 
+   const [signInMessageFromBack, setSignInMessageFromBack]=useState("")
+
+   const handleClickSignIn = async ()=>{
+    var rawResponse = await fetch('/SignIn', {
+      method: 'POST',
+      headers: {'Content-Type':'application/x-www-form-urlencoded'},
+      body:`emailFromFront=${signInEmail}&passwordFromFront=${signInPassword}`
+})
+      var response = await rawResponse.json();
+      setSignInMessageFromBack(response.message)
+      console.log("------------",signInMessageFromBack)
+
+   }
 
    //Etats du formulaire SignUp
 
@@ -24,16 +37,17 @@ function Sign() {
    const [signUpZipCode, setSignUpZipCode] = useState('');
    const [signUpCity, setSignUpCity] = useState('');
    const [signUpPhone, setSignUpPhone] = useState('');
+   const[signUpMessageFromBack, setSignUpMessageFromBack]=useState("")
 
    const handleClickSignUp = async ()=>{
-      console.log("click")
       var rawResponse = await fetch('/SignUp', {
       method: 'POST',
       headers: {'Content-Type':'application/x-www-form-urlencoded'},
       body:`firstNameFromFront=${signUpFirstName}&lastNameFromFront=${signUpLastName}&emailFromFront=${signUpEmail}&passwordFromFront=${signUpPassword}&confirmPasswordFromFront=${signUpConfirmPassword}&adressFromFront=${signUpAdress}&zipCodeFromFront=${signUpZipCode}&cityFromFront=${signUpCity}&phoneFromFront=${signUpPhone}`
 })
       var response = await rawResponse.json();
-      console.log(response)
+      setSignUpMessageFromBack(response.message)
+      console.log(signUpMessageFromBack)
 };
 
 
@@ -96,7 +110,7 @@ function Sign() {
             <Form.Group controlId="formBasicCheckbox">
               <Form.Check style={styles.label} type="checkbox" label="Check me out" />
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={()=>console.log(signInEmail, signInPassword)}>
+            <Button variant="primary" type="submit" onClick={()=>handleClickSignIn()}>
               Sign In
             </Button>
         </Form>
@@ -187,13 +201,15 @@ function Sign() {
                   </Form.Text>
                   </Form.Group>
               
-              
+                  <p className="messageFromFront">Réponse:{signUpMessageFromBack}</p>
             <Button variant="primary" type="submit" 
                     onClick={()=>handleClickSignUp()}
                   >
               Sign Up
             </Button>
+            
         </Form>
+        
 
         </div>
         </Col>

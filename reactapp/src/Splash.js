@@ -9,25 +9,9 @@ import {Modal, Button, Carousel} from 'react-bootstrap';
 
 
 function Splash() {
-    var styles={
-       
-        image:{
-          marginLeft:'40%'
-        },
-        
-        modalButton:{
-          marginTop:'20px',
-          marginBottom:'20px',
-          
-        },
-        
-         
-    }
-
-        
         //let history = useHistory();
 
-         // Etats pour la Modal 
+      // Etats pour la Modal 
          const [show, setShow] = useState(true);
          const handleClose = () => 
          setShow(false);

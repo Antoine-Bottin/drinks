@@ -1,0 +1,83 @@
+/*Composant Basket*/
+.background{
+    min-height:100vh;
+    width:100vw;
+    background-color:#121D2B;
+    padding-bottom:20px
+  }
+  .blackboard{
+    background-color:black;
+    min-height:auto;
+    width:90vw;
+    margin:20px auto;
+  }
+  .title{
+    justify-content:center;
+    color:#CFDEE7;
+    font-family: Candara Light;
+    font-size:55px;
+  }
+  .basketIcon{
+    margin:auto;
+    height:35px;
+    width:35px;
+  }
+  .arrayTitle{
+    display:flex;
+    justify-content:space-between;
+    border-style:solid;
+    border-color:white;
+    margin-top:20px;
+    padding:5px 20px;
+  }
+  .articleTitle{
+    font-size:15px;
+    font-family: Candara Light;
+    font-weight:bold;
+    color:#CFDEE7;
+    margin-left:20px;
+  }
+  .newArticle{
+    display:flex;
+    justify-content:space-between;
+    height:auto;
+    margin-top:10px;
+    padding:5px 20px;
+  }
+  .articleImg{
+    height:50px;
+    width:30px;
+  }
+  .newArticleTitle{
+    padding-top:10px;
+    font-size:15px;
+    font-family:Candara Light;
+    color:#CFDEE7;
+  }
+  .totalArray{
+    display:flex;
+    justify-content:space-between;
+    border-style:solid;
+    margin-top:15vh;
+    padding-top:5px;
+    padding-bottom:5px;
+    border-color:white;
+    color:#CFDEE7;
+  }
+  .total{
+    padding-left:10px;
+    font-size:15px;
+    font-family:Candara Light;
+    font-weight:bold;
+  }
+  .validateIcon{
+    height:40px;
+    width:40px;
+    padding-right:10px;
+  }
+  .deleteIcon{
+    height:18px;
+    width:18px;
+    margin-top:10px;
+  }
+  

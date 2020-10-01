@@ -1,7 +1,9 @@
 import React,{useState,} from 'react';
 import './App.css';
 import Menu from "./Menu";
-import { useHistory } from "react-router-dom";
+import './Splash.css';
+import {Link,Redirect} from 'react-router-dom'
+
 
 //import {Carousel} from 'reactstrap';
 import {Modal, Button, Carousel} from 'react-bootstrap';
@@ -13,9 +15,21 @@ function Splash() {
 
       // Etats pour la Modal 
          const [show, setShow] = useState(true);
-         const handleClose = () => 
-         setShow(false);
-        // history.push("/bhome");
+         const [redirect, setRedirect] = useState(false)
+
+         const handleClose = () => {
+          setShow(false);
+          setRedirect(true)
+         }
+         if(redirect){
+           return(
+             <Redirect to="/home"></Redirect>
+           )
+         }
+         
+         
+
+         // history.push("/bhome");
     
   return (
     <div className='backgroundSplash'>

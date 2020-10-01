@@ -1,0 +1,86 @@
+/*Composant Shop*/
+.background{
+    min-height:100vh;
+    min-width:100vw;
+    background-color:#121D2B
+  }
+  .shopPage{
+    display:flex;
+  }
+  .filters{
+    width:auto;
+    text-align:center;
+    margin-top:5vh;
+    margin-right:50px;
+   /* margin-bottom:auto;*/
+  }
+  .title{
+    color:#CFDEE7;
+    font-family: Arial;
+    font-weight:thin;
+  }
+  .check{
+    display:flex;
+    flex-direction:column;
+    font-family:Candara Light;
+    font-size:15px;
+    color: #CFDEE7;
+    text-align:left;
+    margin-top:10px;
+    margin-left:10px;
+    margin-right:10px;
+  } 
+  .card{
+    max-width:100%;
+    max-height:100%;
+    margin:20px 20px;
+    background-color:black
+  }
+  .cardBody{
+    height:auto;
+    background-color:black;
+  }
+  .cardTitle{
+    color:#CFDEE7;
+    font-family:Candara Light;
+    font-size:25px;
+  }
+  .cardText{
+    color:#CFDEE7;
+    font-family:Candara Light;
+  }
+  .category{
+    color:#6a7379;
+    font-family:Candara Light;
+    font-size:20px;
+  }
+  .cardStock{
+    color:#CFDEE7;
+    font-family:Candara Light;
+    font-weight: bold;
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:5px;
+  }
+  .cardStockNumber{
+    font-size:20px; 
+  }
+  .price{
+    display:flex;
+    justify-content:space-between;
+    color:#CFDEE7;
+    font-family:Candara Light;
+  }
+  .icon{
+    height:30px;
+    width:30px;
+    cursor:pointer;
+  }
+  .range{
+    font-size:12px;
+    color:#CFDEE7;
+    margin-top:20px;
+    margin-right:10px;
+  }
+
+  

@@ -39,18 +39,34 @@ router.post('/newProduct', async function(req, res, next){                      
 
    var product = await newProduct.save();	
    console.log(product)
-
+0
    res.json({result:true, message: "Nouveau produit ajouté"})
 })
+
+
+/*Récupération Produits*/
+
+router.get('/getProduct', async function(req, res, next){
+  var message;
+  var result;
+  var articleTabFromBack = await productModel.find();
+  if(articleTabFromBack){
+    message="base de données chargée";
+    res.json({result:true, message, articleTabFromBack})
+  }
+  console.log("BDD===========", articleTabFromBack);
+  
+})
+
 
 
 /*SignUp*/
 
 router.post('/signUp', async function(req, res, next){                                    
   var message;
-  var result = false;
+  var result;
 
-  if (req.body.passwordFromFront !== req.body.confirmPasswordFromFront) {        //Vérification que les mots de passe sont identiques
+  if (req.body.passwordFromFront !== req.body.confirmPasswordFromFront) {                  //Vérification que les mots de passe sont identiques
     message = "Les mots de passe ne sont pas identiques.";
     res.json({result, message})
   }else{

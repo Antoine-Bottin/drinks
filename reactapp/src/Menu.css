@@ -1,0 +1,111 @@
+/*Composant Menu*/
+
+
+
+
+.menu {
+    background-color:#373F47;
+    min-height:100px;
+    width:20vw;
+  }
+  .Bottleicon{
+    height:45px;
+    width:45px;
+    position:absolute;
+    top:13px;
+    left:2px;
+  }
+  .col1{
+    padding-top:5px;
+    padding-left:15%;
+  }
+  .titleLetter{
+    font-family:'Candara Light';
+    font-size:50px;
+    color:#CFDEE7;
+  }
+  .titleLetterSmall{
+    font-family:'Candara Light';
+    font-size:20px;
+    color:#CFDEE7;
+    padding-top:45px;
+  }
+  
+  
+  @media screen and (min-width:1545px){
+  .col2{
+    display:flex;
+    flex:auto;
+    padding-left:30vw;
+  }
+  .menuIcon{
+    height:35px;
+    width:35px;
+    margin: 30px 20px
+  }
+  .menuIcon:hover{
+    height:35px;
+    width:35px;
+    margin: 25px 10px;
+  }
+  
+  }
+  @media screen and (max-width:1545px){
+    .col2{
+      display:flex;
+      flex:auto;
+      padding-left:20vw;
+    }
+    
+    .menuIcon{
+      height:35px;
+      width:35px;
+      margin: 30px 20px
+    }
+    .menuIcon:hover{
+      height:45px;
+      width:45px;
+      margin: 25px 10px;
+      transition-duration:1000;
+    }
+    
+    }
+  @media screen and (max-width:1030px){
+    .col2{
+      display:flex;
+      flex:auto;
+      padding-left:10vw;
+    }
+    .menuIcon{
+      height:35px;
+      width:35px;
+      margin: 30px 20px
+    }
+    .menuIcon:hover{
+      height:45px;
+      width:45px;
+      margin: 25px 10px;
+      transition-duration:1000;
+    }
+    
+    }
+    @media screen and (max-width:771px){
+      .col2{
+        display:flex;
+        flex:auto;
+        padding-left:14vw;
+      }
+      .menuIcon{
+        height:35px;
+        width:35px;
+        margin: 30px 20px
+      }
+      .menuIcon:hover{
+        height:45px;
+        width:45px;
+        margin: 25px 10px;
+        transition-duration:1000;
+      }
+      
+    }
+  

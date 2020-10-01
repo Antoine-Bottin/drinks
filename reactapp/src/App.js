@@ -9,6 +9,15 @@ import Menu from "./Menu";
 import Sign from "./Sign";
 import Splash from "./Splash";
 
+import count from './reducers/count-reducer';
+import basket from'./reducers/basket-reducer'  //Import du reducer
+import {Provider} from 'react-redux';	//Import du Provider
+import {createStore, combineReducers}  from 'redux';	//Import du store
+
+
+
+const store = createStore(combineReducers({count, basket}));    //Création du Store
+
 
 
 
@@ -18,17 +27,19 @@ function App() {
     //Mise en place de la navigation entre composants via React Router Dom
     // La route "/" renvoie au composant Home
     //La route "/shop" renvoie au composant Shop etc...
-    <Router>
-      <Switch>
-        <Route path="/" exact component={Splash} /> 
-        <Route path="/home" exact component={Home} />    
-        <Route path="/shop" exact component={Shop} />
-        <Route path="/basket" exact component={Basket} />
-        <Route path="/account" exact component={Account} />
-        <Route path ="/menu" exact component={Menu}/>
-        <Route path ="/sign" exact component={Sign}/>
-      </Switch>
-    </Router>
+    <Provider store={store}>
+      <Router>
+          <Switch>
+            <Route path="/" exact component={Splash} /> 
+            <Route path="/home" exact component={Home} />    
+            <Route path="/shop" exact component={Shop} />
+            <Route path="/basket" exact component={Basket} />
+            <Route path="/account" exact component={Account} />
+            <Route path ="/menu" exact component={Menu}/>
+            <Route path ="/sign" exact component={Sign}/>
+          </Switch>
+        </Router>
+    </Provider>
 
   );
 }

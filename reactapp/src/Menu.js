@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {Container, Row, Col, Button} from 'reactstrap';
 import {Link,Redirect} from 'react-router-dom'
+import "./Menu.css";
+import {connect} from 'react-redux';
 
 
 
 
-function Menu() {
 
+function Menu(props) {
     // Les états et setteurs
 
     let [homeIcon, sethomeIcon]=useState(false)
@@ -54,33 +56,24 @@ function Menu() {
         setaccountIcon(true)
     )
         
-    console.log('homeIcon',homeIcon, "homeRedirect",homeRedirect)
         //Les conditions pour illuminer les icones.
 
-   let home='browser.svg'
-    if (homeIcon){
-        home= 'browserBlue.svg';
-        sethomeIcon(false)
+        let home="browser.svg";
+        let shop="potion.svg";
+        let basket="smart-cart.svg";
+        let account="user.svg"
+    if (props.currentPage==="home"){
+        home="browserBlue.svg"
     }
-    if (homeRedirect){
-        return( <Redirect to='/home' />)
+    if (props.currentPage==="shop"){
+        shop = "potionGreen.svg"
     }
-    
-    let shop='potion.svg'
-    if(shopIcon){
-        shop='potionGreen.svg'
+    if(props.currentPage==="basket"){
+        basket="smart-cartPink.svg"
     }
-
-    let basket='smart-cart.svg'
-    if (basketIcon){
-        basket= 'smart-cartPink.svg'
+    if(props.currentPage==="account"){
+        account="userYellow.svg"
     }
-    
-    let account='user.svg'
-    if(accountIcon){
-        account='userYellow.svg'
-    }
-  
     return (
   
          
@@ -90,7 +83,7 @@ function Menu() {
                     <Row className ='col1'>
                         <Col xs={1} md={1}className='titleLetter'>D</Col>
                         <Col xs={1} md={1}className='titleLetter'>r</Col>
-                        <Col xs={1} md={1}><Link to='/home'><img alt='icone Drinks' onClick={()=>handleClickHome()} className='Bottleicon' src='rum.svg'/></Link></Col> 
+                        <Col xs={1} md={1}><Link to='/home'><img alt='icone Drinks' onClick={()=>handleClickHome()} className='Bottleicon' src='rumBlue.svg'/></Link></Col> 
                         <Col xs={1} md={1}className='titleLetter'>n</Col>
                         <Col xs={1} md={1}className='titleLetter'>K</Col>
                         <Col xs={1} md={1}className='titleLetter'>s</Col>
@@ -98,13 +91,12 @@ function Menu() {
                     </Row>       
                 </Col>
                 <Col xs={12} md={6} > 
-                        <Row className='col2'>
-                            
-                            <img alt='icone Home' onClick={()=>handleClickHome()} className='menuIcon' src={home}/>
-                            <img alt='icone Shop'onClick={()=>handleClickShop()}className='menuIcon' src={shop}/>2
-                            <img alt='icone Basket' onClick={()=>handleClickBasket()}className='menuIcon' src={basket}/>
-                            <img alt='icone Account' onClick={()=>handleClickAccount()} className='menuIcon' src={account}/>
-                        </Row>
+                    <Row className='col2'>
+                        <Link to="/home"><img alt='icone Home' className='menuIcon' src={home}/></Link>
+                        <Link to="/shop"><img alt='icone Shop'onClick={()=>handleClickShop()}className='menuIcon' src={shop}/></Link>
+                        <Link to="/basket"><img alt='icone Basket' onClick={()=>handleClickBasket()}className='menuIcon' src={basket}/>{props.countToDisplay}</Link>
+                        <Link to="/account"><img alt='icone Account' onClick={()=>handleClickAccount()} className='menuIcon' src={account}/></Link>
+                    </Row>
                 </Col>
             </Row>
         </Container> 
@@ -112,4 +104,12 @@ function Menu() {
   );
 }
 
-export default Menu;
+function mapStateToProps(state) {
+    return { countToDisplay: state.count }
+}
+
+export default connect(
+    mapStateToProps, 
+    null
+    )(Menu);
+        

@@ -1,0 +1,30 @@
+.background{
+    min-height:100vh;
+    width:100vw;
+    background-color:#121D2B;
+    padding-bottom:20px;
+}
+.blackboard{
+    background-color:black;
+    width:1000px;
+}
+.h4{
+    color:#CFDEE7;
+    font-family:Candara Light;
+    padding-top:20px;
+    padding-bottom:20px;
+    margin:auto;
+}
+.icon{
+    height:30px;
+    width:30px;
+    margin:auto;
+}
+.title{
+    color:#CFDEE7;
+    font-family:Candara Light;
+    font-weight:bold;
+    margin:auto;
+    padding-top:20px;
+}
+

@@ -1,6 +1,7 @@
 import React,{useState,} from 'react';
 import './App.css';
 import Menu from "./Menu";
+import './Home.css'
 
 //import {Carousel} from 'reactstrap';
 import {Modal, Button, Carousel} from 'react-bootstrap';
@@ -11,7 +12,7 @@ function Home() {
     
   return (
     <div className='background'>
-        <Menu/>
+        <Menu currentPage="home"></Menu>
           
           <Carousel className='carousel'>
             <Carousel.Item>

@@ -44,7 +44,7 @@ router.post('/newProduct', async function(req, res, next){                      
 })
 
 
-/*Récupération Produits*/
+/*Récupération de tous les Produits*/
 
 router.get('/getProduct', async function(req, res, next){
   var message;
@@ -54,8 +54,26 @@ router.get('/getProduct', async function(req, res, next){
     message="base de données chargée";
     res.json({result:true, message, articleTabFromBack})
   }
-  console.log("BDD===========", articleTabFromBack);
   
+})
+
+/*Récupérations des produits ajoutés au Panier*/
+
+router.post('/getProductToBasket', async function(req, res, next){
+    var basketArticle = req.body.IdFromFront ;  
+    var receivedBasketArticle = JSON.parse(basketArticle);           //Réception des Id des articles sélectionnés.
+      console.log("========== DUBACK",receivedBasketArticle.length)
+    
+    
+      var basketResult = await productModel.find(           //Trouver dans la base de donnée, tous les _id qui correspondent à ceux stockés dans ma variable basketArticle et renvoyer l'ensemble de leur
+        { _id: { $in: receivedBasketArticle } }  
+    );
+    
+       console.log("BASKET FROM BACK=======",basketResult)
+
+
+
+res.json({result:true, basketResult})
 })
 
 

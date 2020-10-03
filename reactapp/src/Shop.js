@@ -14,7 +14,6 @@ function Shop(props) {
                                                                  /*Chargement des articles depuis la Base de données*/
     useEffect( () => {
         async function loadData() {
-            console.log('useEffect OK')
             var rawResponse = await fetch('/getProduct');
             var response = await rawResponse.json();
             setArticleTab(response.articleTabFromBack);
@@ -36,8 +35,7 @@ function Shop(props) {
     }
 
     const handleClickBasket = (articleId)=>{
-        props.onIncreaseClick();
-        props.addToBasket(articleId);
+        props.addArticleIdToBasket(articleId);
 
     }
     
@@ -111,13 +109,9 @@ function Shop(props) {
 
 function mapDispatchToProps(dispatch) {
     return {
-      onIncreaseClick: function() {  
-        dispatch( {type: 'addArticleToCount'} )    
-  },
-     addToBasket: function(articleId) {
-        dispatch({type:'addArticleToBasket',
+     addArticleIdToBasket: function(articleId) {
+        dispatch({type:'addArticleIdToBasket',
                 value:articleId})
-
   }
     
 }

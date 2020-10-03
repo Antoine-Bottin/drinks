@@ -105,7 +105,7 @@ function Menu(props) {
 }
 
 function mapStateToProps(state) {
-    return { countToDisplay: state.count }
+    return { countToDisplay: state.articleId.length }
 }
 
 export default connect(

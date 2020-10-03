@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import Menu from "./Menu";
 import {Container,Row} from 'reactstrap';
@@ -9,22 +9,41 @@ import {connect} from 'react-redux';
 
 
 function Basket(props) {
-   console.log("================ DANS LE BASKET",props.articleId)
-    var selectedArticleTab=[{cardImg:"bottle1.jpg",cardTitle:"Kraken", cardPrice:29.90},
-                            {cardImg:"bottle2.jpg",cardTitle:"Belvedere", cardPrice:29.90},
-                            {cardImg:"bottle1.jpg",cardTitle:"Nikka", cardPrice:29.90}
-    ];
+    const articleId = props.articleId
+
+    const [basketArticleTab, setBasketArticleTab] = useState([]);
+
+    const sentArticleId = JSON.stringify(articleId)
+    console.log("=======stringifié",sentArticleId)
     
-    /*const [newBasket, setNewBasket] = useState([]);*/
+    useEffect( () => {
+        async function loadDataToBasket() {
+            var rawResponse = await fetch('/getProductToBasket',{
+                method: 'POST',
+                headers: {'Content-Type':'application/x-www-form-urlencoded'},
+                body:`IdFromFront=${sentArticleId}`
+            })
+            var response = await rawResponse.json();
+            setBasketArticleTab(response.basketResult)
+            
+            
+        }
+        loadDataToBasket()
+      }, [articleId]);                                              //Le useEffect se rejoue à la modification de l'état articleId dans le réduceur.
+     
+      console.log("=====useState PANIER", basketArticleTab)
+    
 
-    const handleClickDelete = (position)=>{
-       selectedArticleTab.splice(position,1) 
-    }
 
+     const handleClickTrash=(articleIdToDelete)=>{
+         props.deleteArticleIdToBasket(articleIdToDelete);
+         console.log("ID DE LARTICLE A SUPPRIMER", articleIdToDelete)
+     }
+ 
     var basket=[];
-    for(let i=0; i<selectedArticleTab.length;i++){
+    for(let i=0; i<basketArticleTab.length;i++){
         basket.push(<Row className="newArticle">
-                        <img className='articleImg' src={selectedArticleTab[i].cardImg}></img><h3 className="newArticleTitle">{selectedArticleTab[i].cardTitle}</h3><h3 className="newArticleTitle">Quantity</h3><h3 className="newArticleTitle">Price H.T</h3><h3 className="newArticleTitle">{selectedArticleTab[i].cardPrice}</h3><img onClick={()=>handleClickDelete({i})} className='deleteIcon' src='trash.svg' alt='delete item'></img>
+                        <img className='articleImg' src={basketArticleTab[i].picture}></img><h3 className="newArticleTitle">{basketArticleTab[i].name}</h3><h3 className="newArticleTitle">Quantity</h3><h3 className="newArticleTitle">Price H.T</h3><h3 className="newArticleTitle">{basketArticleTab[i].priceHT}</h3><img onClick={()=>handleClickTrash(basketArticleTab[i]._id)} className='deleteIcon' src='trash.svg' alt='delete item'></img>
                     </Row>)
     }
     
@@ -51,14 +70,23 @@ function Basket(props) {
   );
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        deleteArticleIdToBasket: function(articleIdToDelete) {
+        dispatch({type:'deleteArticleIdToBasket',
+                value:articleIdToDelete})
+  }
+    
+}
+}
+
 function mapStateToProps(state){
-    return { articleId: state.basket,
+    return { articleId: state.articleId, 
     }
 }
 
-
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
   )(Basket);
 

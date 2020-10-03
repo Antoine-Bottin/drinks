@@ -9,14 +9,13 @@ import Menu from "./Menu";
 import Sign from "./Sign";
 import Splash from "./Splash";
 
-import count from './reducers/count-reducer';
-import basket from'./reducers/basket-reducer'  //Import du reducer
+import articleId from'./reducers/articleId-reducer'  ;//Import du reducer
 import {Provider} from 'react-redux';	//Import du Provider
 import {createStore, combineReducers}  from 'redux';	//Import du store
 
 
 
-const store = createStore(combineReducers({count, basket}));    //Création du Store
+const store = createStore(combineReducers({articleId}));    //Création du Store
 
 
 

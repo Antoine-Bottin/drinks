@@ -11,7 +11,6 @@ import './Sign.css'
 function Sign() {
     //Etats du formulaire SignIn
    
-   
    const [signInEmail, setSignInEmail] = useState('');
    const [signInPassword, setSignInPassword] = useState('');
 
@@ -30,6 +29,8 @@ function Sign() {
    }
    console.log("------------",signInMessageFromBack)
 
+
+
    //Etats du formulaire SignUp
 
    const [signUpFirstName, setSignUpFirstName] = useState('');
@@ -42,6 +43,8 @@ function Sign() {
    const [signUpCity, setSignUpCity] = useState('');
    const [signUpPhone, setSignUpPhone] = useState('');
    const[signUpMessageFromBack, setSignUpMessageFromBack]=useState("")
+
+
 
    const handleClickSignUp = async ()=>{
       var rawResponse = await fetch('/SignUp', {

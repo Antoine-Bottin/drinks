@@ -74,6 +74,15 @@ function Menu(props) {
     if(props.currentPage==="account"){
         account="userYellow.svg"
     }
+
+    //La condition pour l'accès à account
+    var accountDisplay=""
+    if(props.isConnected!==true){
+        accountDisplay = <Link to="/sign"><img alt='icone Account' onClick={()=>handleClickAccount()} className='menuIcon' src={account}/></Link>
+    }else{
+        accountDisplay=<Link to="/account"><img alt='icone Account' onClick={()=>handleClickAccount()} className='menuIcon' src={account}/></Link>
+
+    }
     return (
   
          
@@ -95,7 +104,7 @@ function Menu(props) {
                         <Link to="/home"><img alt='icone Home' className='menuIcon' src={home}/></Link>
                         <Link to="/shop"><img alt='icone Shop'onClick={()=>handleClickShop()}className='menuIcon' src={shop}/></Link>
                         <Link to="/basket"><img alt='icone Basket' onClick={()=>handleClickBasket()}className='menuIcon' src={basket}/>{props.countToDisplay}</Link>
-                        <Link to="/account"><img alt='icone Account' onClick={()=>handleClickAccount()} className='menuIcon' src={account}/></Link>
+                        {accountDisplay}
                     </Row>
                 </Col>
             </Row>
@@ -105,7 +114,8 @@ function Menu(props) {
 }
 
 function mapStateToProps(state) {
-    return { countToDisplay: state.articleId.length }
+    return { countToDisplay: state.articleId.length,
+            isConnected : state.isConnected }
 }
 
 export default connect(

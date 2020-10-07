@@ -10,7 +10,7 @@ var encBase64 = require("crypto-js/enc-base64");
 
 var customerModel = require('../models/customer');
 var productModel = require('../models/product');
-var orderModel = require('../models/order');
+//var orderModel = require('../models/order');
 
 
 /* GET home page. */
@@ -43,6 +43,19 @@ router.post('/newProduct', async function(req, res, next){                      
    res.json({result:true, message: "Nouveau produit ajouté"})
 })
 
+/*New Order*/
+/*router.post('/newOrder', async function(req, res, next){                              //Ajout du Panier validé en base de données
+  var newOrder = new orderModel ({                                                  
+    date: Date.now(),
+    //product:,
+    priceTTC: req.body.totalPriceFromFront
+   });
+
+   var order = await newOrder.save();	
+   console.log("COMMANDE AN BDD", order)
+   res.json({result:true, message: "Commande ajoutée en BDD"})
+})*/
+
 
 /*Récupération de tous les Produits*/
 
@@ -61,17 +74,12 @@ router.get('/getProduct', async function(req, res, next){
 
 router.post('/getProductToBasket', async function(req, res, next){
     var basketArticle = req.body.IdFromFront ;  
-    var receivedBasketArticle = JSON.parse(basketArticle);           //Réception des Id des articles sélectionnés.
+    var receivedBasketArticle = JSON.parse(basketArticle);                       //Réception des Id des articles sélectionnés.
       console.log("========== DUBACK",receivedBasketArticle.length)
-    
-    
-      var basketResult = await productModel.find(           //Trouver dans la base de donnée, tous les _id qui correspondent à ceux stockés dans ma variable basketArticle et renvoyer l'ensemble de leur
-        { _id: { $in: receivedBasketArticle } }  
-    );
-    
+      var basketResult = await productModel.find(                                //Trouver dans la base de donnée, tous les _id qui correspondent à ceux stockés dans ma variable basketArticle et renvoyer l'ensemble de leur
+          { _id: { $in: receivedBasketArticle } }  
+    );    
        console.log("BASKET FROM BACK=======",basketResult)
-
-
 
 res.json({result:true, basketResult})
 })
@@ -83,24 +91,35 @@ res.json({result:true, basketResult})
 router.post('/signUp', async function(req, res, next){                                    
   var message;
   var result;
-
+  if (req.body.firstNameFromFront === "" ||                                               //Vérifications champs vide
+      req.body.lastNameFromFront === "" ||
+      req.body.emailFromFront === "" ||
+      req.body.passwordFromFront === "" ||
+      req.body.confirmPasswordFromFront === ""||
+      req.body.adressFromFront === "" ||
+      req.body.zipCodeFromFront === null||
+      req.body.cityFromFront === "" ||
+      req.body.phoneFromFront === "") {                  
+    message = "Merci de renseigner tous les champs.";
+    result= false;
+    res.json({result, message})
+  }else{
   if (req.body.passwordFromFront !== req.body.confirmPasswordFromFront) {                  //Vérification que les mots de passe sont identiques
     message = "Les mots de passe ne sont pas identiques.";
+    result= false;
     res.json({result, message})
   }else{
     var searchCustomer = await customerModel.findOne({email: req.body.emailFromFront})    //Vérification que l'adresse mail n'est pas déja en base de données.
     if(searchCustomer !== null){
+    result = false
     message = "Cette adresse email n'est pas disponible, ou vous êtes déjà client";
     res.json({result, message});
   }else{
-    res.json({result:true, message: "Nouveau client ajouté"})
-  }}
-    console.log(result, message)
 
     var salt = uid2(32);
     var customerToken = uid2(32);
 
-  var newCustomer = new customerModel ({                                                //Enregistrement du nouveau membre en BDD
+    var newCustomer = new customerModel ({                                                //Enregistrement du nouveau membre en BDD
     firstName:req.body.firstNameFromFront,
     lastName:req.body.lastNameFromFront,
     email:req.body.emailFromFront,
@@ -112,13 +131,23 @@ router.post('/signUp', async function(req, res, next){
     zipCode:req.body.zipCodeFromFront,
     city:req.body.cityFromFront,
     phone:req.body.phoneFromFront,
-    //order:orderSaved._id
+    orders:{
+      date:Date.now(),
+      priceTTC: req.body.totalPriceFromFront
+    }
     
    });
 
-   var customer = await newCustomer.save();	
-   console.log("==========",customer);
+   var customerSaved = await newCustomer.save();	
+   var customerIdSignUp = customerSaved._id
+
+   res.json({result:true, message: "Nouveau client ajouté", customerIdSignUp})
+   console.log(result, message)
+  }}
+  }
+   console.log("==========",customerIdSignUp);
 })
+
 
 
 
@@ -128,6 +157,7 @@ router.post('/signIn', async function(req, res, next){
   var message="vous êtes connecté";
   var result;
   var searchCustomer = await customerModel.findOne({email: req.body.emailFromFront})
+  var customerIdSignIn = searchCustomer._id;
 if (searchCustomer === null) {
   message = "Email ou mot de passe incorrect."
   result = false;
@@ -142,8 +172,8 @@ if (searchCustomer === null) {
   }
 }    
 
-res.json({result, message});
-console.log("le signIn",result, message)
+res.json({result, message, customerIdSignIn});
+console.log("le signIn",result, message, customerIdSignIn)
 });
 
 

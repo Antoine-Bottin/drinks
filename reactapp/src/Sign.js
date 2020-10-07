@@ -4,30 +4,48 @@ import Menu from "./Menu";
 import {Container,Row,Col} from 'reactstrap';
 import { Form, Button } from 'react-bootstrap';
 import './Sign.css'
+import {Redirect, Link} from 'react-router-dom'
+import {connect} from 'react-redux';
 
 
 
 
-function Sign() {
-    //Etats du formulaire SignIn
+
+function Sign(props) {
+   
+  //Etats du formulaire SignIn
    
    const [signInEmail, setSignInEmail] = useState('');
    const [signInPassword, setSignInPassword] = useState('');
+  
+   const [signInMessageFromBack, setSignInMessageFromBack] = useState("");
+   const [signInResultFromBack, setSignInResultFromBack] = useState("");
 
-   const [signInMessageFromBack, setSignInMessageFromBack]=useState("")
+   const [customerIdSignIn, setCustomerIdSignIn] = useState("");
+   const [customerIdSignUp, setCustomerIdSignUp] = useState("");
+
+   const [isConnected, setIsConnected] = useState(false);
+
+
 
    const handleClickSignIn = async ()=>{
     var rawResponse = await fetch('/SignIn', {
       method: 'POST',
       headers: {'Content-Type':'application/x-www-form-urlencoded'},
       body:`emailFromFront=${signInEmail}&passwordFromFront=${signInPassword}`
-})
+    })
       var response = await rawResponse.json();
-      setSignInMessageFromBack(response.message)
+      var signInResponse = response.customerIdSignIn
+      console.log("REPONSEE SIGNIN", signInResponse );
+      setSignInMessageFromBack(response.message);
+      setSignInResultFromBack(response.result);
+      props.sendCustomerId(signInResponse)
+      };
       
-
-   }
-   console.log("------------",signInMessageFromBack)
+      
+   //console.log("------------",signInMessageFromBack,"+++++++++++++", signInResultFromBack)
+   //console.log("CUSTOMER ID SIGN IN", customerIdSignIn, "CUSTOMER ID SIGNUP", customerIdSignUp)
+   
 
 
 
@@ -42,7 +60,11 @@ function Sign() {
    const [signUpZipCode, setSignUpZipCode] = useState('');
    const [signUpCity, setSignUpCity] = useState('');
    const [signUpPhone, setSignUpPhone] = useState('');
+  
    const[signUpMessageFromBack, setSignUpMessageFromBack]=useState("")
+   const[signUpResultFromBack, setSignUpResultFromBack] = useState("")
+
+
 
 
 
@@ -53,10 +75,25 @@ function Sign() {
       body:`firstNameFromFront=${signUpFirstName}&lastNameFromFront=${signUpLastName}&emailFromFront=${signUpEmail}&passwordFromFront=${signUpPassword}&confirmPasswordFromFront=${signUpConfirmPassword}&adressFromFront=${signUpAdress}&zipCodeFromFront=${signUpZipCode}&cityFromFront=${signUpCity}&phoneFromFront=${signUpPhone}`
 })
       var response = await rawResponse.json();
-      setSignUpMessageFromBack(response.message)
+      var signUpResponse = response.customerIdSignUp
+      console.log("REPONSE SIGN UP", signUpResponse)
+      setSignUpMessageFromBack(response.message);
+      setSignUpResultFromBack(response.result); 
       
+
 };
-      console.log(signUpMessageFromBack)
+
+
+
+      if(signInResultFromBack || signUpResultFromBack){
+        props.connectedFromSignIn();
+        return(
+          <Redirect to='basket'/>
+        )
+   };
+
+
+
 
   return (
     <div className='background'>
@@ -98,7 +135,7 @@ function Sign() {
             <Col>
               <Form.Group controlId="Firstname">
                 <Form.Label className="label">Prénom</Form.Label>
-                <Form.Control type="text" placeholder="Enter your firstname"
+                <Form.Control  type="text" Required placeholder="Enter your firstname" 
                               onChange={(e) => setSignUpFirstName(e.target.value)} 
                               value={signUpFirstName} />
               </Form.Group>
@@ -106,7 +143,7 @@ function Sign() {
             <Col>
               <Form.Group controlId="Lastname">
                 <Form.Label className="label">Nom</Form.Label>
-                <Form.Control type="text" placeholder="Enter your lastname"
+                <Form.Control type="text" isRequired  placeholder="Enter your lastname" 
                               onChange={(e) => setSignUpLastName(e.target.value)} 
                               value={signUpLastName} />
               </Form.Group>
@@ -114,14 +151,14 @@ function Sign() {
           </Row>
           <Form.Group controlId="Email">
                 <Form.Label className="label">Email</Form.Label>
-                <Form.Control type="text" placeholder="Enter your Email"
+                <Form.Control type="text" isRequired  placeholder="Enter your Email" 
                               onChange={(e) => setSignUpEmail(e.target.value)} 
                               value={signUpEmail} />
   
               </Form.Group>
               <Form.Group controlId="Password">
                 <Form.Label className="label">Mot de passe</Form.Label>
-                <Form.Control type="password" placeholder="Enter your password"
+                <Form.Control type="password" isRequired  placeholder="Enter your password" 
                               onChange={(e) => setSignUpPassword(e.target.value)} 
                               value={signUpPassword} />
                 <Form.Text className="text-muted">
@@ -129,7 +166,7 @@ function Sign() {
               </Form.Group>
               <Form.Group controlId="Confirm Password">
                 <Form.Label className="label">Confirmer mot de passe</Form.Label>
-                <Form.Control type="password" placeholder="Confirm your password"
+                <Form.Control type="password" isRequired  placeholder="Confirm your password"  
                               onChange={(e) => setSignUpConfirmPassword(e.target.value)} 
                               value={signUpConfirmPassword} />
                 <Form.Text className="text-muted">
@@ -137,7 +174,7 @@ function Sign() {
               </Form.Group>
               <Form.Group controlId="Adress">
                 <Form.Label className="label">Adress</Form.Label>
-                <Form.Control type="text" placeholder="Enter your adress"
+                <Form.Control type="text" isRequired placeholder="Enter your adress" 
                               onChange={(e) => setSignUpAdress(e.target.value)} 
                               value={signUpAdress} />
                 <Form.Text className="text-muted">
@@ -147,7 +184,7 @@ function Sign() {
                 <Col>
                   <Form.Group controlId="Zip Code">
                   <Form.Label className="label">Zip Code</Form.Label>
-                  <Form.Control type="text" placeholder="Zip Code"
+                  <Form.Control type="text" isRequired placeholder="Zip Code" 
                                 onChange={(e) => setSignUpZipCode(e.target.value)} 
                                 value={signUpZipCode} />
                   <Form.Text className="text-muted">
@@ -157,7 +194,7 @@ function Sign() {
                 <Col>
                   <Form.Group controlId="City">
                   <Form.Label className="label">City</Form.Label>
-                  <Form.Control type="text" placeholder="City"
+                  <Form.Control type="text" isRequired placeholder="City" 
                                 onChange={(e) => setSignUpCity(e.target.value)} 
                                 value={signUpCity} />
                   <Form.Text className="text-muted">
@@ -167,7 +204,7 @@ function Sign() {
               </Row>
                   <Form.Group controlId="Phone Number">
                   <Form.Label className="label">Phone Number</Form.Label>
-                  <Form.Control type="text" placeholder="Phone Number"
+                  <Form.Control type="text" isRequired placeholder="Phone Number"  
                                 onChange={(e) => setSignUpPhone(e.target.value)} 
                                 value={signUpPhone} />
                   <Form.Text className="text-muted">
@@ -193,4 +230,20 @@ function Sign() {
 }
 
 
-export default Sign;
+function mapDispatchToProps(dispatch) {
+  return {
+    connectedFromSignIn: function() { 
+        dispatch( {type: 'signInConnected'} ) 
+    },
+    sendCustomerId : function(signInResponse){
+        dispatch({type:"storeCustomerId",
+                  value:signInResponse})
+    }
+  }
+}
+
+export default connect(
+    null, 
+    mapDispatchToProps
+)(Sign);
+

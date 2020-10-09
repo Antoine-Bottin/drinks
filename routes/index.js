@@ -87,9 +87,9 @@ res.json({result:true, basketResult})
 /*Récupération des informations client*/
 
 router.post('/getDataToAccount', async function(req, res, next){
-  var customerId = req.body.customerIdFromFront;
-  var customerData = await customerModel.findById(
-    customerId
+  var customerToken = req.body.customerTokenFromFront;
+  var customerData = await customerModel.findOne(
+    {token:customerToken}
   );
   console.log("CUSTOMER DATA", customerData)
   res.json({result:true, customerData})
@@ -152,9 +152,9 @@ router.post('/signUp', async function(req, res, next){
    });
 
    var customerSaved = await newCustomer.save();	
-   var customerIdSignUp = customerSaved._id
+   var customerTokenSignUp = customerSaved.token
 
-   res.json({result:true, message: "Nouveau client ajouté", customerIdSignUp})
+   res.json({result:true, message: "Nouveau client ajouté", customerTokenSignUp})
    console.log(result, message)
   }}
   }
@@ -170,7 +170,7 @@ router.post('/signIn', async function(req, res, next){
   var message="vous êtes connecté";
   var result;
   var searchCustomer = await customerModel.findOne({email: req.body.emailFromFront})
-  var customerIdSignIn = searchCustomer._id;
+  var customerTokenSignIn = searchCustomer.token;
 if (searchCustomer === null) {
   message = "Email ou mot de passe incorrect."
   result = false;
@@ -185,8 +185,8 @@ if (searchCustomer === null) {
   }
 }    
 
-res.json({result, message, customerIdSignIn});
-console.log("le signIn",result, message, customerIdSignIn)
+res.json({result, message, customerTokenSignIn});
+console.log("le signIn",result, message, customerTokenSignIn)
 });
 
 

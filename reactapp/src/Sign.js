@@ -21,8 +21,6 @@ function Sign(props) {
    const [signInMessageFromBack, setSignInMessageFromBack] = useState("");
    const [signInResultFromBack, setSignInResultFromBack] = useState("");
 
-   const [customerIdSignIn, setCustomerIdSignIn] = useState("");
-   const [customerIdSignUp, setCustomerIdSignUp] = useState("");
 
    const [isConnected, setIsConnected] = useState(false);
 
@@ -35,11 +33,11 @@ function Sign(props) {
       body:`emailFromFront=${signInEmail}&passwordFromFront=${signInPassword}`
     })
       var response = await rawResponse.json();
-      var signInResponse = response.customerIdSignIn
+      var signInResponse = response.customerTokenSignIn
       console.log("REPONSEE SIGNIN", signInResponse );
       setSignInMessageFromBack(response.message);
       setSignInResultFromBack(response.result);
-      props.sendCustomerId(signInResponse)
+      props.sendCustomerToken(signInResponse)
       };
       
       
@@ -75,11 +73,11 @@ function Sign(props) {
       body:`firstNameFromFront=${signUpFirstName}&lastNameFromFront=${signUpLastName}&emailFromFront=${signUpEmail}&passwordFromFront=${signUpPassword}&confirmPasswordFromFront=${signUpConfirmPassword}&adressFromFront=${signUpAdress}&zipCodeFromFront=${signUpZipCode}&cityFromFront=${signUpCity}&phoneFromFront=${signUpPhone}`
 })
       var response = await rawResponse.json();
-      var signUpResponse = response.customerIdSignUp
+      var signUpResponse = response.customerTokenSignUp
       console.log("REPONSE SIGN UP", signUpResponse)
       setSignUpMessageFromBack(response.message);
       setSignUpResultFromBack(response.result); 
-      props.sendCustomerId(signUpResponse)
+      props.sendCustomerToken(signUpResponse)
       
 
 };
@@ -236,8 +234,8 @@ function mapDispatchToProps(dispatch) {
     connectedFromSignIn: function() { 
         dispatch( {type: 'signInConnected'} ) 
     },
-    sendCustomerId : function(signResponse){
-        dispatch({type:"storeCustomerId",
+    sendCustomerToken : function(signResponse){
+        dispatch({type:"storeCustomerToken",
                   value:signResponse})
     }
   }

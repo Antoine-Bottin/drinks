@@ -11,13 +11,13 @@ import Splash from "./Splash";
 
 import articleId from'./reducers/articleId-reducer'  ;//Import du reducer
 import isConnected from './reducers/isConnected-reducer';
-import customerId from './reducers/customerId-reducer';
+import customerToken from './reducers/customerToken-reducer';
 import {Provider} from 'react-redux';	//Import du Provider
 import {createStore, combineReducers}  from 'redux';	//Import du store
 
 
 
-const store = createStore(combineReducers({articleId, isConnected, customerId }));    //Création du Store
+const store = createStore(combineReducers({articleId, isConnected, customerToken }));    //Création du Store
 
 
 

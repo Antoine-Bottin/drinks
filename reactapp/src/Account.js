@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 
 function Account(props) {
 
-  var customerId = props.customerId;
+  var customerToken = props.customerToken;
   const [customerData, setCustomerData] = useState({})
   console.log("LA VARIABLE", customerData)
 
@@ -19,7 +19,7 @@ function Account(props) {
         var rawResponse = await fetch('/getDataToAccount',{
             method: 'POST',
             headers: {'Content-Type':'application/x-www-form-urlencoded'},
-            body:`customerIdFromFront=${customerId}`
+            body:`customerTokenFromFront=${customerToken}`
         })
         var response = await rawResponse.json();
         console.log("CUSTOMER DATA",response.customerData.firstName)
@@ -79,7 +79,7 @@ function Account(props) {
 
 
 function mapStateToProps(state){
-  return { articleId: state.articleId, isConnected:state.isConnected, customerId:state.customerId
+  return { articleId: state.articleId, isConnected:state.isConnected, customerToken:state.customerToken
   }
 }
 

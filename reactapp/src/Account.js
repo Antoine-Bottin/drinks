@@ -1,13 +1,35 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import Menu from "./Menu";
 import {Container,Row,Col} from 'reactstrap';
 import "./Account.css"
+import {connect} from 'react-redux';
 
 
 
-function Account() {
 
+function Account(props) {
+
+  var customerId = props.customerId;
+  const [customerData, setCustomerData] = useState({})
+  console.log("LA VARIABLE", customerData)
+
+  useEffect( () => {
+    async function loadDataToAccount() {
+        var rawResponse = await fetch('/getDataToAccount',{
+            method: 'POST',
+            headers: {'Content-Type':'application/x-www-form-urlencoded'},
+            body:`customerIdFromFront=${customerId}`
+        })
+        var response = await rawResponse.json();
+        console.log("CUSTOMER DATA",response.customerData.firstName)
+        setCustomerData(response.customerData) ;
+    
+        
+        
+    }
+    loadDataToAccount()
+  }, []);         
   
   return (
     <div className="background">
@@ -33,19 +55,19 @@ function Account() {
             <img className="icon" src='userBlue.svg'></img>
           </Row>
           <Row className='h4'>
-            Surname :
+            Surname : {customerData.firstName}
           </Row>
           <Row className='h4'>
-            Name : 
+            Name : {customerData.lastName}
           </Row>
           <Row className='h4'>
-            Email :
+            Email : {customerData.email}
           </Row>
           <Row className='h4'>
-            Phone Number :
+            Phone Number : {customerData.phone}
           </Row>
           <Row className='h4'>
-            Billing Adress
+            Billing Adress : {customerData.adress}
           </Row>
           </Col>
         </Row>
@@ -56,4 +78,13 @@ function Account() {
 }
 
 
-export default Account;
+function mapStateToProps(state){
+  return { articleId: state.articleId, isConnected:state.isConnected, customerId:state.customerId
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(Account);
+

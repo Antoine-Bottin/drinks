@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import Menu from "./Menu";
-import {Container,Row,Col,FormGroup, Label,Input, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText} from 'reactstrap';
+import {Container,Row,Col,Form, FormGroup, Label,Input, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText} from 'reactstrap';
 import './Shop.css'
 import {connect} from 'react-redux';
 
@@ -10,6 +10,10 @@ import {connect} from 'react-redux';
 function Shop(props) {
    
      const [articleTab, setArticleTab] = useState([]);
+     console.log("ARTICLETAB", articleTab)
+     const [refreshedArticleTab, setRefreshedArticleTab] = useState([])
+     console.log("REFRESHED", refreshedArticleTab)
+     
 
                                                                  /*Chargement des articles depuis la Base de données*/
     useEffect( () => {
@@ -17,22 +21,54 @@ function Shop(props) {
             var rawResponse = await fetch('/getProduct');
             var response = await rawResponse.json();
             setArticleTab(response.articleTabFromBack);
+            setRefreshedArticleTab(response.articleTabFromBack)
         }
         loadData()
       }, []);
       console.log("ici========",articleTab)
       
         
-   
+      var ginTab = articleTab.filter(gin=>gin.category ==="Gin")
+      var whiskyTab = articleTab.filter(whisky=>whisky.category ==="Whisky")
+      var armagnacTab = articleTab.filter(armagnac=>armagnac.category ==="Armagnac")
+      var cognacTab = articleTab.filter(cognac=>cognac.category ==="Cognac")
+      var rhumTab = articleTab.filter(rhum=>rhum.category ==="Rhum")
+      var calvadosTab = articleTab.filter(calvados=>calvados.category ==="Calvados")
 
+
+      console.log("GINTAB3", ginTab)
     
-
-
-    const [ginSelected, setGinSelected] = useState(false)
-    const handleClickGinSelected=()=>{
-        console.log("cliqué");
-        setGinSelected(true);
+      const handleClickAllSelected=()=>{
+        console.log("All");
+        setRefreshedArticleTab(articleTab);   
     }
+    const handleClickGinSelected=()=>{
+        console.log("Gin");
+        setRefreshedArticleTab(ginTab);   
+    }
+    const handleClickWhiskySelected=()=>{
+        console.log("Whisky");
+        setRefreshedArticleTab(whiskyTab);
+    }
+    const handleClickArmagnacSelected=()=>{
+        console.log("Armagnac");
+        setRefreshedArticleTab(armagnacTab);
+    }
+    const handleClickCognacSelected=()=>{
+        console.log("Cognac");
+        setRefreshedArticleTab(cognacTab);
+    }
+    const handleClickRhumSelected=()=>{
+        console.log("Rhum");
+        setRefreshedArticleTab(rhumTab);
+    }
+    const handleClickCalvadosSelected=()=>{
+        console.log("Calvados");
+        setRefreshedArticleTab(calvadosTab);
+    }
+
+
+
 
     const handleClickBasket = (articleId)=>{
         props.addArticleIdToBasket(articleId);
@@ -42,7 +78,7 @@ function Shop(props) {
      
         
     var shop=[];
-    for(let i=0; i<articleTab.length; i++){
+    for(let i=0; i<refreshedArticleTab.length; i++){
         shop.push(
         <Col  xs={12}  md={6} lg={2}>
             <Card className='card' >
@@ -66,35 +102,54 @@ function Shop(props) {
 {/* Filtres */}
                 <div className='filters'>
                         <div className='title'>Filtres</div>
+                    <Form>
                         <FormGroup check>
-                            <Label className='check' check>
-                            <Input  type="checkbox" id="checkbox1" onChange={()=>handleClickGinSelected()}/>{' '}
+                            <Label check className='check'>
+                            <Input type="radio" name="radio2" onChange={()=>handleClickAllSelected()} />{' '}
+                            All
+                            </Label>
+                        </FormGroup>
+                        <FormGroup check>
+                            <Label check className='check'>
+                            <Input type="radio" name="radio2" onChange={()=>handleClickGinSelected()} />{' '}
                             Gin
                             </Label>
-                            <Label className='check' check>
-                            <Input  type="checkbox" id="checkbox2" />{' '}
+                        </FormGroup>
+                        <FormGroup check>
+                            <Label check className='check'>
+                            <Input type="radio" name="radio2" onChange={()=>handleClickWhiskySelected()} />{' '}
                             Whisky
                             </Label>
-                            <Label className='check' check>
-                            <Input  type="checkbox" id="checkbox3" />{' '}
+                        </FormGroup>  
+                        <FormGroup check>
+                            <Label check className='check'>
+                            <Input type="radio" name="radio2" onChange={()=>handleClickArmagnacSelected()}/>{' '}
                             Armagnac
                             </Label>
-                            <Label className='check' check>
-                            <Input  type="checkbox" id="checkbox4" />{' '}
+                        </FormGroup>
+                        <FormGroup check>
+                            <Label check className='check'>
+                            <Input type="radio" name="radio2" onChange={()=>handleClickCognacSelected()}/>{' '}
                             Cognac
                             </Label>
-                            <Label className='check' check>
-                            <Input  type="checkbox" id="checkbox4" />{' '}
+                        </FormGroup>
+                        <FormGroup check>
+                            <Label check className='check'>
+                            <Input type="radio" name="radio2" onChange={()=>handleClickRhumSelected()}/>{' '}
                             Rhum
                             </Label>
-                            <Label className='check' check>
-                            <Input  type="checkbox" id="checkbox4" />{' '}
+                        </FormGroup>
+                        <FormGroup check>
+                            <Label check className='check'>
+                            <Input type="radio" name="radio2" onChange={()=>handleClickCalvadosSelected()}/>{' '}
                             Calvados
                             </Label>
-                            <Label classeName="range" for="exampleRange">Prix</Label>
-                            <Input type="range" name="range" id="exampleRange" />
-                        
-                    </FormGroup>
+                        </FormGroup>
+                        <FormGroup check>
+                                <Label classeName="range" for="exampleRange">Prix</Label>
+                                <Input type="range" name="range" id="exampleRange" />
+                        </FormGroup>
+                    </Form>
                 </div>
                 <Container fluid >
                     <Row>

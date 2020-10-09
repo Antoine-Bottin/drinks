@@ -79,6 +79,7 @@ function Sign(props) {
       console.log("REPONSE SIGN UP", signUpResponse)
       setSignUpMessageFromBack(response.message);
       setSignUpResultFromBack(response.result); 
+      props.sendCustomerId(signUpResponse)
       
 
 };
@@ -235,9 +236,9 @@ function mapDispatchToProps(dispatch) {
     connectedFromSignIn: function() { 
         dispatch( {type: 'signInConnected'} ) 
     },
-    sendCustomerId : function(signInResponse){
+    sendCustomerId : function(signResponse){
         dispatch({type:"storeCustomerId",
-                  value:signInResponse})
+                  value:signResponse})
     }
   }
 }

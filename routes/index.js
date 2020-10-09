@@ -84,6 +84,19 @@ router.post('/getProductToBasket', async function(req, res, next){
 res.json({result:true, basketResult})
 })
 
+/*Récupération des informations client*/
+
+router.post('/getDataToAccount', async function(req, res, next){
+  var customerId = req.body.customerIdFromFront;
+  var customerData = await customerModel.findById(
+    customerId
+  );
+  console.log("CUSTOMER DATA", customerData)
+  res.json({result:true, customerData})
+
+})
+
+
 
 
 /*SignUp*/

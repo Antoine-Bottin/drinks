@@ -10,7 +10,7 @@ var encBase64 = require("crypto-js/enc-base64");
 
 var customerModel = require('../models/customer');
 var productModel = require('../models/product');
-//var orderModel = require('../models/order');
+var orderModel = require('../models/order');
 
 
 /* GET home page. */
@@ -44,17 +44,23 @@ router.post('/newProduct', async function(req, res, next){                      
 })
 
 /*New Order*/
-/*router.post('/newOrder', async function(req, res, next){                              //Ajout du Panier validé en base de données
+router.post('/newOrder', async function(req, res, next){                              //Ajout du Panier validé en base de données
+  var user = await customerModel.findOne(
+    {token:req.body.tokenFromFront}
+  )
+    console.log("USER",(req.body.tokenFromFront))
+    console.log(user);
   var newOrder = new orderModel ({                                                  
     date: Date.now(),
-    //product:,
+    user: user._id,
+    product:JSON.parse(req.body.sentArticleIdFromFront),
     priceTTC: req.body.totalPriceFromFront
    });
 
    var order = await newOrder.save();	
-   console.log("COMMANDE AN BDD", order)
+   console.log("COMMANDE EN BDD", order)
    res.json({result:true, message: "Commande ajoutée en BDD"})
-})*/
+})
 
 
 /*Récupération de tous les Produits*/
@@ -84,7 +90,7 @@ router.post('/getProductToBasket', async function(req, res, next){
 res.json({result:true, basketResult})
 })
 
-/*Récupération des informations client*/
+/*Récupération des informations client pour la page Account*/
 
 router.post('/getDataToAccount', async function(req, res, next){
   var customerToken = req.body.customerTokenFromFront;
@@ -93,6 +99,23 @@ router.post('/getDataToAccount', async function(req, res, next){
   );
   console.log("CUSTOMER DATA", customerData)
   res.json({result:true, customerData})
+
+})
+
+/*Récupération des informations de commandes pour la page Account*/
+
+router.post('/getOrderToAccount', async function(req, res, next){
+  var customerToken = req.body.customerTokenFromFront;
+  console.log("VERIF",customerToken)
+  var user = await customerModel.findOne(
+    {token:customerToken}
+  );
+  var userOrder = await orderModel.find(
+    {user:user}
+  )
+
+  console.log("userOrder", userOrder)
+  res.json({result:true, userOrder})
 
 })
 
@@ -144,21 +167,18 @@ router.post('/signUp', async function(req, res, next){
     zipCode:req.body.zipCodeFromFront,
     city:req.body.cityFromFront,
     phone:req.body.phoneFromFront,
-    orders:{
-      date:Date.now(),
-      priceTTC: req.body.totalPriceFromFront
-    }
+    
     
    });
 
-   var customerSaved = await newCustomer.save();	
+   var customerSaved = await newCustomer.save();	                                      //Envoi du Token au front
    var customerTokenSignUp = customerSaved.token
 
    res.json({result:true, message: "Nouveau client ajouté", customerTokenSignUp})
    console.log(result, message)
   }}
   }
-   console.log("==========",customerIdSignUp);
+   console.log("==========",customerTokenSignUp);
 })
 
 
@@ -185,7 +205,7 @@ if (searchCustomer === null) {
   }
 }    
 
-res.json({result, message, customerTokenSignIn});
+res.json({result, message, customerTokenSignIn});                                           //Envoi du token au front
 console.log("le signIn",result, message, customerTokenSignIn)
 });
 

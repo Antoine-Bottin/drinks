@@ -145,10 +145,6 @@ function Shop(props) {
                             Calvados
                             </Label>
                         </FormGroup>
-                        <FormGroup check>
-                                <Label classeName="range" for="exampleRange">Prix</Label>
-                                <Input type="range" name="range" id="exampleRange" />
-                        </FormGroup>
                     </Form>
                 </div>
                 <Container fluid >

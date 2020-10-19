@@ -15,7 +15,7 @@ function Basket(props) {
     const articleId = props.articleId;
     var totalPrice = 134.9;
     var successOrder = "";
-
+    var token = props.customerToken;
     
 
 
@@ -61,10 +61,11 @@ function Basket(props) {
         }else{
         setOrderValidated(true);
         console.log('le clic marche sur valider');
+        
         var rawResponse = await fetch('/newOrder',{
             method: 'POST',
             headers: {'Content-Type':'application/x-www-form-urlencoded'},
-            body:`IdFromFront=${sentArticleId}&totalPriceFromFront=${totalPrice}  `
+            body:`sentArticleIdFromFront=${sentArticleId}&totalPriceFromFront=${totalPrice}&tokenFromFront=${token}`
                     
         })
         var response = await rawResponse.json();
@@ -134,7 +135,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state){
-    return { articleId: state.articleId, isConnected:state.isConnected
+    return { articleId: state.articleId, isConnected:state.isConnected, customerToken:state.customerToken
     }
 }
 

@@ -73,11 +73,13 @@ function Sign(props) {
       body:`firstNameFromFront=${signUpFirstName}&lastNameFromFront=${signUpLastName}&emailFromFront=${signUpEmail}&passwordFromFront=${signUpPassword}&confirmPasswordFromFront=${signUpConfirmPassword}&adressFromFront=${signUpAdress}&zipCodeFromFront=${signUpZipCode}&cityFromFront=${signUpCity}&phoneFromFront=${signUpPhone}`
 })
       var response = await rawResponse.json();
-      var signUpResponse = response.customerTokenSignUp
-      console.log("REPONSE SIGN UP", signUpResponse)
+      var signUpResponse = response.customerTokenSignUp;
+      console.log("REPONSE SIGN UP", signUpResponse);
       setSignUpMessageFromBack(response.message);
       setSignUpResultFromBack(response.result); 
-      props.sendCustomerToken(signUpResponse)
+      if(signUpResponse){
+        props.sendCustomerToken(signUpResponse)};
+      
       
 
 };
@@ -210,7 +212,7 @@ function Sign(props) {
                   </Form.Text>
                   </Form.Group>
               
-                  <p className="messageFromFront">Réponse:{signUpMessageFromBack}</p>
+                  <p className="messageFromFront">{signUpMessageFromBack}</p>
             <Button variant="primary" 
                     onClick={()=>handleClickSignUp()}
                   >

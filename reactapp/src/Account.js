@@ -12,6 +12,7 @@ function Account(props) {
 
   var customerToken = props.customerToken;
   const [customerData, setCustomerData] = useState({})
+  const [orderData, setOrderData] = useState({})
   console.log("LA VARIABLE", customerData)
 
   useEffect( () => {
@@ -24,12 +25,39 @@ function Account(props) {
         var response = await rawResponse.json();
         console.log("CUSTOMER DATA",response.customerData.firstName)
         setCustomerData(response.customerData) ;
-    
-        
-        
-    }
+     
+  }
     loadDataToAccount()
-  }, []);         
+    
+    
+    async function loadOrderToAccount() {
+      var rawResponse = await fetch('/getOrderToAccount',{
+          method: 'POST',
+          headers: {'Content-Type':'application/x-www-form-urlencoded'},
+          body:`customerTokenFromFront=${customerToken}`
+      })
+      var orderResponse = await rawResponse.json();
+      var userOrder = orderResponse.userOrder;
+
+      setOrderData(userOrder) ;
+   
+}
+  loadOrderToAccount()
+    
+  }, []);     
+  console.log("ORDER DATA",orderData)
+
+  var orderTab=[];
+  for (var i=0; i<orderData.length; i++){
+      orderTab.push(
+        <Row>
+              <h5 className="h4">{orderData[i]._id}</h5><h5 className='h4'>{orderData[i].date}</h5><h5 className='h4'>{orderData[i].priceTTC}</h5>
+            </Row>
+      )
+  }
+
+ 
+  
   
   return (
     <div className="background">
@@ -46,6 +74,7 @@ function Account(props) {
             <Row>
               <h5 className="h4">Order Number</h5><h5 className='h4'>Date</h5><h5 className='h4'>Price</h5>
             </Row>
+            {orderTab}
           </Col>
           <Col xs={12} md={6}>
           <Row>

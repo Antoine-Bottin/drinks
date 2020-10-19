@@ -2,7 +2,10 @@ export default function(articleId=[], action) {
     
     if(action.type == 'addArticleIdToBasket') {
         var newArticleId = [... articleId];
+        if (newArticleId !== articleId){
         newArticleId.push(action.value)
+        }
+        
         console.log("=========DANS LE REDUCEUR", newArticleId, "NOMBRE D ARTICLES",newArticleId.length)
         return newArticleId;	
 

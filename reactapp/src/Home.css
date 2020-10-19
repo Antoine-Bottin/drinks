@@ -53,7 +53,7 @@
     animation-duration: 10s;
     animation-name: slidein;
     animation-iteration-count: infinite;
-    animation-direction: alternate;
+    animation-direction:alternate;
   }
   
   @keyframes slidein {

@@ -4,8 +4,7 @@ export default function(customerToken = "", action){
          var newCustomerToken = action.value;
          console.log("===REDUCEUR CUSTOMER ID ====", newCustomerToken);
          return newCustomerToken
-    } 
-    else{
+    } else{
         return customerToken;
     }
  }

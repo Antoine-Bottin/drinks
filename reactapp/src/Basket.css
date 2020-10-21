@@ -21,6 +21,7 @@
     margin:auto;
     height:35px;
     width:35px;
+    
   }
   .arrayTitle{
     display:flex;
@@ -30,8 +31,12 @@
     margin-top:10px;
     padding:5px 20px;
   }
+  .articleTitleImg{
+    margin-right:25vw;
+  }
   .articleTitle{
     font-size:15px;
+    width:13vw;
     font-family: Candara Light;
     font-weight:bold;
     color:#CFDEE7;
@@ -41,18 +46,31 @@
     display:flex;
     justify-content:space-between;
     height:auto;
-    margin-top:10px;
+    margin-top:40px;
     padding:5px 20px;
   }
-  .articleImg{
+  img.newArticleTitle{
     height:50px;
     width:30px;
-  }
+    margin-right:13vw;
+    }
+
   .newArticleTitle{
+    width:13vw;
     padding-top:10px;
     font-size:15px;
     font-family:Candara Light;
     color:#CFDEE7;
+  }
+  .minus{
+    width:15px;
+    margin-right : 10px;
+    cursor:pointer;
+  }
+  .plus{
+    width:15px;
+    margin-left : 10px;
+    cursor:pointer;
   }
   .totalArray{
     display:flex;

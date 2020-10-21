@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import Menu from "./Menu";
-import {Container,Row} from 'reactstrap';
+import {Container,Row, Button} from 'reactstrap';
 import './Basket.css'
 import {connect} from 'react-redux';
 import {Redirect, Link} from 'react-router-dom'
@@ -25,6 +25,7 @@ function Basket(props) {
     const [isConnected, setIsConnected] = useState(props.isConnected)
     const [orderValidated, setOrderValidated] = useState(false);
     const [basketEmpty, setBasketEmpty] = useState(false);
+    const [articleQuantity, setArticleQuantity] = useState(1);
 
 
     console.log(" DANS LE BASKET", isConnected)
@@ -65,7 +66,7 @@ function Basket(props) {
         var rawResponse = await fetch('/newOrder',{
             method: 'POST',
             headers: {'Content-Type':'application/x-www-form-urlencoded'},
-            body:`sentArticleIdFromFront=${sentArticleId}&totalPriceFromFront=${totalPrice}&tokenFromFront=${token}`
+            body:`sentArticleIdFromFront=${sentArticleId}&totalPriceFromFront=${totalTTC}&tokenFromFront=${token}`
                     
         })
         var response = await rawResponse.json();
@@ -79,14 +80,34 @@ function Basket(props) {
          props.deleteArticleIdToBasket(articleIdToDelete);
          console.log("ID DE LARTICLE A SUPPRIMER", articleIdToDelete)
      }
+         
+     
+     /* Augmente ou diminue la quantité d'un article*/
+     const handleClickDecrease =(position) =>{
+        console.log(position) 
+        if(articleQuantity>1){
+         setArticleQuantity(articleQuantity-1)
+     }
+    }
+     
+    const handleClickIncrease =(position) =>{
+        console.log(position)
+        setArticleQuantity(articleQuantity+1)
+    }
+   
  
-
+    var totalHT = 0;
+    var totalTTC = 0;;
     var basket=[];
     for(let i=0; i<basketArticleTab.length;i++){
         basket.push(<Row className="newArticle">
-                        <img className='articleImg' src={basketArticleTab[i].picture}></img><h3 className="newArticleTitle">{basketArticleTab[i].name}</h3><h3 className="newArticleTitle">Quantity</h3><h3 className="newArticleTitle">Price H.T</h3><h3 className="newArticleTitle">{basketArticleTab[i].priceHT}</h3><img onClick={()=>handleClickTrash(basketArticleTab[i]._id)} className='deleteIcon' src='trash.svg' alt='delete item'></img>
+                        <img className='newArticleTitle' src={basketArticleTab[i].picture}></img><h3 className="newArticleTitle">{basketArticleTab[i].name}</h3><h3 className="newArticleTitle"><img src='minus.svg' class="minus"  onClick={()=>handleClickDecrease(basketArticleTab[i])} ></img>{articleQuantity}<img src='plus.svg' class="plus"  onClick={()=>handleClickIncrease()}></img></h3><h3 className="newArticleTitle">{basketArticleTab[i].priceHT * articleQuantity}€ HT</h3><h3 className="newArticleTitle">{basketArticleTab[i].priceHT*1.20 * articleQuantity}€TTC</h3><img onClick={()=>handleClickTrash(basketArticleTab[i]._id)} className='deleteIcon' src='trash.svg' alt='delete item'></img>
                     </Row>)
+        totalHT=+ basketArticleTab[i].priceHT * articleQuantity
+        totalTTC = totalHT *1.2;
     }
+
+
 
     /*Conditions de panier vide, envoi en base de données si client connecté, sinon renvoi à la page de connection*/ 
     if(basketEmpty){
@@ -109,12 +130,10 @@ function Basket(props) {
             <Row>
                  <img  className="basketIcon" src='smart-cartBlue.svg' alt='Panier'></img>
             </Row>
-            <Row className="arrayTitle">
-                <h3 className="articleTitle">Item</h3><h3 className="articleTitle">Name</h3><h3 className="articleTitle">Quantity</h3><h3 className="articleTitle">Price H.T</h3><h3 className="articleTitle">Price T.T.C</h3><h3 className="articleTitle">Delete</h3>
-            </Row>
+           
                 {basket}
             <Row className="totalArray">
-                <h3 className='total'>Total H.T</h3><h3 className='total'>Total T.T.C</h3><img onClick={()=>handleClickValidate()}  className='validateIcon' src='checkBlue.svg' alt='validate Basket'/>
+                <h3 className='total'>Total H.T : {totalHT}€</h3><h3 className='total'>Total T.T.C : {totalTTC}€</h3><img onClick={()=>handleClickValidate()}  className='validateIcon' src='checkBlue.svg' alt='validate Basket'/>
             </Row>
             {successOrder}
         </Container>

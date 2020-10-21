@@ -1,11 +1,10 @@
 export default function(articleId=[], action) {
     
     if(action.type == 'addArticleIdToBasket') {
-        var newArticleId = [... articleId];
-        if (newArticleId !== articleId){
-        newArticleId.push(action.value)
-        }
-        
+        var newArticleIdToSort = [... articleId];
+        newArticleIdToSort.push(action.value)
+        newArticleId = [... new Set(newArticleIdToSort)]
+        console.log("REDUCEUR AGAIN", action.quantity)
         console.log("=========DANS LE REDUCEUR", newArticleId, "NOMBRE D ARTICLES",newArticleId.length)
         return newArticleId;	
 

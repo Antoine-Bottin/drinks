@@ -50,9 +50,9 @@ function Account(props) {
   var orderTab=[];
   for (var i=0; i<orderData.length; i++){
       orderTab.push(
-        <Row>
-              <h5 className="h4">{orderData[i]._id}</h5><h5 className='h4'>{orderData[i].date}</h5><h5 className='h4'>{orderData[i].priceTTC}</h5>
-            </Row>
+              <Row>
+              <div className="order">{orderData[i]._id}</div><div className='order'>{orderData[i].date}</div><div className='order'>{orderData[i].priceTTC}</div>
+              </Row>
       )
   }
 
@@ -72,7 +72,7 @@ function Account(props) {
               <img  className="icon" src='potionBlue.svg'></img>
             </Row>
             <Row>
-              <h5 className="h4">Order Number</h5><h5 className='h4'>Date</h5><h5 className='h4'>Price</h5>
+              <div className="orderTitle">Order Number</div><div className='orderTitle'>Date</div><div className='orderTitle'>Price</div>
             </Row>
             {orderTab}
           </Col>
@@ -83,20 +83,29 @@ function Account(props) {
           <Row>
             <img className="icon" src='userBlue.svg'></img>
           </Row>
-          <Row className='h4'>
+          <Row className='orderTitle'>
+            Informations:
+          </Row>
+          <Row className='order'>
             Surname : {customerData.firstName}
           </Row>
-          <Row className='h4'>
+          <Row className='order'>
             Name : {customerData.lastName}
           </Row>
-          <Row className='h4'>
+          <Row className='order'>
             Email : {customerData.email}
           </Row>
-          <Row className='h4'>
+          <Row className='order'>
             Phone Number : {customerData.phone}
           </Row>
-          <Row className='h4'>
+          <Row className='order'>
             Billing Adress : {customerData.adress}
+          </Row>
+          <Row className='order'>
+             ZipCode: {customerData.zipCode}
+          </Row>
+          <Row className='order'>
+             City: {customerData.city}
           </Row>
           </Col>
         </Row>

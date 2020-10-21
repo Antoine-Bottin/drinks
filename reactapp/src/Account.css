@@ -10,17 +10,29 @@
     min-width:90vw;
     margin:100px auto;
 }
-.h4{
+.order{
     color:#CFDEE7;
     font-family:Candara Light;
-    padding-top:20px;
+    padding-top:10px;
     padding-bottom:20px;
     margin:auto;
 }
+.orderTitle{
+    color:#CFDEE7;
+    font-family:Candara Light;
+    font-weight:bold;
+    padding-top:10px;
+    padding-bottom:20px;
+    margin:auto;  
+}
+
 .icon{
     height:30px;
     width:30px;
-    margin:auto;
+    margin-bottom:5vh;
+    margin-left:auto;
+    margin-right:auto;
+    cursor:pointer;
 }
 .title{
     color:#CFDEE7;
@@ -28,5 +40,6 @@
     font-weight:bold;
     margin:auto;
     padding-top:20px;
+    margin-bottom:1vh;
 }
 

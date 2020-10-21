@@ -51,7 +51,7 @@ router.post('/newOrder', async function(req, res, next){                        
     console.log("USER",(req.body.tokenFromFront))
     console.log(user);
   var newOrder = new orderModel ({                                                  
-    date: Date.now(),
+    date: new Date(),
     user: user._id,
     product:JSON.parse(req.body.sentArticleIdFromFront),
     priceTTC: req.body.totalPriceFromFront

@@ -70,8 +70,9 @@ function Shop(props) {
 
 
 
-    const handleClickBasket = (articleId)=>{
-        props.addArticleIdToBasket(articleId);
+    const handleClickBasket = (articleId, quantity)=>{
+        props.addArticleIdToBasket(articleId, quantity);
+        console.log("quantity========",quantity)
 
     }
     
@@ -88,7 +89,7 @@ function Shop(props) {
                 <CardSubtitle className='category'>{articleTab[i].category}</CardSubtitle>
                 <CardText className='cardText'>{articleTab[i].description}</CardText>
                 <CardSubtitle className="cardStock">Stock restant :<span className='cardStockNumber'>{articleTab[i].stock}</span> </CardSubtitle>
-                <h3 className="price">{articleTab[i].priceTTC}€<img className='icon' src='smart-cartBlue.svg' cursor='pointer' onClick={()=>handleClickBasket(articleTab[i]._id)}></img></h3>
+                <h3 className="price">{articleTab[i].priceHT*1.20}€<img className='icon' src='smart-cartBlue.svg' cursor='pointer' onClick={()=>handleClickBasket(articleTab[i]._id, 1)}></img></h3>
                 </CardBody>
             </Card>
         </Col>)
@@ -160,9 +161,9 @@ function Shop(props) {
 
 function mapDispatchToProps(dispatch) {
     return {
-     addArticleIdToBasket: function(articleId) {
+     addArticleIdToBasket: function(articleId, quantity) {
         dispatch({type:'addArticleIdToBasket',
-                value:articleId})
+                value:articleId, quantity:quantity})
   }
     
 }

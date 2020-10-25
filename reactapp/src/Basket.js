@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import Menu from "./Menu";
-import {Container,Row, Button} from 'reactstrap';
+import {Container,Row} from 'reactstrap';
 import './Basket.css'
 import {connect} from 'react-redux';
-import {Redirect, Link} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 
 
 
@@ -13,9 +13,11 @@ import {Redirect, Link} from 'react-router-dom'
 function Basket(props) {
     
     const articleId = props.articleId;
-    var totalPrice = 134.9;
+    //var totalPrice = 134.9;
     var successOrder = "";
     var token = props.customerToken;
+    console.log("TARTICLE ID",articleId)
+    
     
 
 
@@ -26,15 +28,21 @@ function Basket(props) {
     const [orderValidated, setOrderValidated] = useState(false);
     const [basketEmpty, setBasketEmpty] = useState(false);
     const [articleQuantity, setArticleQuantity] = useState(1);
+    const [totalPrice, setTotalPrice] = useState(0)
 
 
     console.log(" DANS LE BASKET", isConnected)
     
+    var newArticleId=[]
+    for(var i=0; i<articleId.length;i++){
+    newArticleId.push(articleId[i].id)
+    }
+    var newArticleIdTab = JSON.stringify(newArticleId)
+    console.log("NEWARTICLEID", newArticleId)
 
 
-
-    const sentArticleId = JSON.stringify(articleId)
-    console.log("=======stringifié",sentArticleId)
+   //const sentArticleId = JSON.stringify(articleId)
+    /*console.log("=======stringifié",sentArticleId)
     useEffect( () => {
         async function loadDataToBasket() {
             var rawResponse = await fetch('/getProductToBasket',{
@@ -51,14 +59,13 @@ function Basket(props) {
         loadDataToBasket()
       }, [articleId]);                                              //Le useEffect se rejoue à la modification de l'état articleId dans le réduceur.
      
-      console.log("=====useState PANIER", basketArticleTab)
+      console.log("=====useState PANIER", basketArticleTab)*/
     
       /*Vérification du panier et Envoi du panier en base de données*/  
       
       const handleClickValidate= async ()=>{
         if(articleId.length<1){
              setBasketEmpty(true)
-             console.log("PANIER VIDE", basketEmpty)
         }else{
         setOrderValidated(true);
         console.log('le clic marche sur valider');
@@ -66,12 +73,12 @@ function Basket(props) {
         var rawResponse = await fetch('/newOrder',{
             method: 'POST',
             headers: {'Content-Type':'application/x-www-form-urlencoded'},
-            body:`sentArticleIdFromFront=${sentArticleId}&totalPriceFromFront=${totalTTC}&tokenFromFront=${token}`
+            body:`sentArticleIdFromFront=${newArticleIdTab}&totalPriceFromFront=${totalTTC}&tokenFromFront=${token}`
                     
         })
         var response = await rawResponse.json();
-        }
         
+    }
         
       };
 
@@ -83,29 +90,30 @@ function Basket(props) {
          
      
      /* Augmente ou diminue la quantité d'un article*/
-     const handleClickDecrease =(position) =>{
-        console.log(position) 
-        if(articleQuantity>1){
-         setArticleQuantity(articleQuantity-1)
-     }
+     const handleClickDecrease = (id) =>{
+        console.log("ID quand DECREASE",id) 
+        props.supprOneToQuantity(id)
+
     }
      
-    const handleClickIncrease =(position) =>{
-        console.log(position)
-        setArticleQuantity(articleQuantity+1)
+    const handleClickIncrease =(id) =>{
+        console.log("ID quand INCREASE",id)
+        props.addOneToQuantity(id)
     }
    
  
     var totalHT = 0;
     var totalTTC = 0;;
     var basket=[];
-    for(let i=0; i<basketArticleTab.length;i++){
+    for(let i=0; i<articleId.length;i++){
         basket.push(<Row className="newArticle">
-                        <img className='newArticleTitle' src={basketArticleTab[i].picture}></img><h3 className="newArticleTitle">{basketArticleTab[i].name}</h3><h3 className="newArticleTitle"><img src='minus.svg' class="minus"  onClick={()=>handleClickDecrease(basketArticleTab[i])} ></img>{articleQuantity}<img src='plus.svg' class="plus"  onClick={()=>handleClickIncrease()}></img></h3><h3 className="newArticleTitle">{basketArticleTab[i].priceHT * articleQuantity}€ HT</h3><h3 className="newArticleTitle">{basketArticleTab[i].priceHT*1.20 * articleQuantity}€TTC</h3><img onClick={()=>handleClickTrash(basketArticleTab[i]._id)} className='deleteIcon' src='trash.svg' alt='delete item'></img>
+                        <img className='newArticleTitle' src={articleId[i].picture}></img><h3 className="newArticleTitle">{articleId[i].name}</h3><h3 className="newArticleTitle"><img src='minus.svg' class="minus"  onClick={()=>handleClickDecrease(articleId[i])} ></img>{articleId[i].quantity}<img src='plus.svg' class="plus"  onClick={()=>handleClickIncrease(articleId[i])}></img></h3><h3 className="newArticleTitle">{Math.round((articleId[i].priceHT * articleId[i].quantity)*100)/100}€ HT</h3><h3 className="newArticleTitle">{Math.round((articleId[i].priceHT*1.20 * articleId[i].quantity)*100)/100}€TTC</h3><img onClick={()=>handleClickTrash(articleId[i].id)} className='deleteIcon' src='trash.svg' alt='delete item'></img>
                     </Row>)
-        totalHT=+ basketArticleTab[i].priceHT * articleQuantity
-        totalTTC = totalHT *1.2;
+        
+        totalHT=Math.round((totalHT +  articleId[i].priceHT * articleId[i].quantity)*100)/100 
+        totalTTC = Math.round((totalHT *1.2)*100)/100;
     }
+    
 
 
 
@@ -147,7 +155,18 @@ function mapDispatchToProps(dispatch) {
     return {
         deleteArticleIdToBasket: function(articleIdToDelete) {
         dispatch({type:'deleteArticleIdToBasket',
-                value:articleIdToDelete})
+                value:articleIdToDelete}
+                )
+  },
+        addOneToQuantity:function(articleIdToAddOne){
+            dispatch({type:'addOneToQuantity',
+                    value:articleIdToAddOne}
+                )
+  },
+        supprOneToQuantity: function(articleIdToSupprOne){
+            dispatch({type:'supprOneToQuantity',
+                    value:articleIdToSupprOne}
+                )
   }
     
 }

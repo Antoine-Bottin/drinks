@@ -38,6 +38,7 @@ function Sign(props) {
       setSignInMessageFromBack(response.message);
       setSignInResultFromBack(response.result);
       props.sendCustomerToken(signInResponse)
+      console.log(props.sendCustomerToken)
       };
       
       

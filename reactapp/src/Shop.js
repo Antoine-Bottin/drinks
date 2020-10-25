@@ -70,9 +70,8 @@ function Shop(props) {
 
 
 
-    const handleClickBasket = (articleId, quantity)=>{
-        props.addArticleIdToBasket(articleId, quantity);
-        console.log("quantity========",quantity)
+    const handleClickBasket = (articleId, picture, name, category, description, stock, priceHT, quantity)=>{
+        props.addArticleIdToBasket(articleId, picture, name, category, description, stock, priceHT, quantity);
 
     }
     
@@ -81,7 +80,7 @@ function Shop(props) {
     var shop=[];
     for(let i=0; i<refreshedArticleTab.length; i++){
         shop.push(
-        <Col  xs={12}  md={6} lg={2}>
+        <Col  xs={12}  md={6} lg={4} xl={3}>
             <Card className='card' >
                 <CardImg className="cardImg" top width="100%" src={articleTab[i].picture} alt="Card image cap" />
                 <CardBody className="cardBody">
@@ -89,7 +88,8 @@ function Shop(props) {
                 <CardSubtitle className='category'>{articleTab[i].category}</CardSubtitle>
                 <CardText className='cardText'>{articleTab[i].description}</CardText>
                 <CardSubtitle className="cardStock">Stock restant :<span className='cardStockNumber'>{articleTab[i].stock}</span> </CardSubtitle>
-                <h3 className="price">{articleTab[i].priceHT*1.20}€<img className='icon' src='smart-cartBlue.svg' cursor='pointer' onClick={()=>handleClickBasket(articleTab[i]._id, 1)}></img></h3>
+                <h3 className="price">{articleTab[i].priceHT*1.20}€</h3>
+                <img className='icon' src='smart-cartBlue.svg' onClick={()=>handleClickBasket(articleTab[i]._id,articleTab[i].picture,articleTab[i].name, articleTab[i].category,articleTab[i].description,articleTab[i].stock,articleTab[i].priceHT,1)}></img><span>Add to Cart</span>
                 </CardBody>
             </Card>
         </Col>)
@@ -161,9 +161,9 @@ function Shop(props) {
 
 function mapDispatchToProps(dispatch) {
     return {
-     addArticleIdToBasket: function(articleId, quantity) {
+     addArticleIdToBasket: function(articleId, picture, name, category, description, stock, priceHT, quantity, ) {
         dispatch({type:'addArticleIdToBasket',
-                value:articleId, quantity:quantity})
+                id:articleId,picture, picture,name:name, category:category, description: description, stock:stock, priceHT:priceHT, quantity:quantity})
   }
     
 }

@@ -44,21 +44,22 @@ router.post('/newProduct', async function(req, res, next){                      
 })
 
 /*New Order*/
-router.post('/newOrder', async function(req, res, next){                              //Ajout du Panier validé en base de données
+router.post('/newOrder', async function(req, res, next){   //Ajout du Panier validé en base de données
+    console.log("route NEW ORDER", req.body.sentArticleIdFromFront)                         
   var user = await customerModel.findOne(
     {token:req.body.tokenFromFront}
   )
-    console.log("USER",(req.body.tokenFromFront))
-    console.log(user);
+  console.log("LE USER",user)
+ 
   var newOrder = new orderModel ({                                                  
     date: new Date(),
     user: user._id,
     product:JSON.parse(req.body.sentArticleIdFromFront),
     priceTTC: req.body.totalPriceFromFront
    });
-
+ 
    var order = await newOrder.save();	
-   console.log("COMMANDE EN BDD", order)
+ 
    res.json({result:true, message: "Commande ajoutée en BDD"})
 })
 
@@ -78,7 +79,7 @@ router.get('/getProduct', async function(req, res, next){
 
 /*Récupérations des produits ajoutés au Panier*/
 
-router.post('/getProductToBasket', async function(req, res, next){
+/*router.post('/getProductToBasket', async function(req, res, next){
     var basketArticle = req.body.IdFromFront ;  
     var receivedBasketArticle = JSON.parse(basketArticle);                       //Réception des Id des articles sélectionnés.
       console.log("========== DUBACK",receivedBasketArticle.length)
@@ -88,7 +89,7 @@ router.post('/getProductToBasket', async function(req, res, next){
        console.log("BASKET FROM BACK=======",basketResult)
 
 res.json({result:true, basketResult})
-})
+})*/
 
 /*Récupération des informations client pour la page Account*/
 

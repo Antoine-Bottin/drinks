@@ -12,14 +12,14 @@
 }
 .order{
     color:#CFDEE7;
-    font-family:Candara Light;
+    font-family:'Quicksand', sans-serif;;
     padding-top:10px;
     padding-bottom:20px;
     margin:auto;
 }
 .orderTitle{
     color:#CFDEE7;
-    font-family:Candara Light;
+    font-family:'Quicksand', sans-serif;;
     font-weight:bold;
     padding-top:10px;
     padding-bottom:20px;
@@ -36,7 +36,7 @@
 }
 .title{
     color:#CFDEE7;
-    font-family:Candara Light;
+    font-family:'Quicksand', sans-serif;;
     font-weight:bold;
     margin:auto;
     padding-top:20px;

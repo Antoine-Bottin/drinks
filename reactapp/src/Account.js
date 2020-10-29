@@ -51,7 +51,7 @@ function Account(props) {
   for (var i=0; i<orderData.length; i++){
       orderTab.push(
               <Row>
-              <div className="order">{orderData[i]._id}</div><div className='order'>{orderData[i].date}</div><div className='order'>{orderData[i].priceTTC}</div>
+              <div className="order">{orderData[i]._id}</div><div className='order'>{orderData[i].date}</div><div className='order'>{orderData[i].priceTTC}€</div>
               </Row>
       )
   }

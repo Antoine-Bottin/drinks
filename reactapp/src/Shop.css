@@ -19,13 +19,13 @@
     text-align:center;
     color:#CFDEE7;
     font-size:20px;
-    font-family: Candara Light;
+    font-family: 'Quicksand', sans-serif;;
     font-weight:thin;
   }
   .check{
     display:flex;
     flex-direction:column;
-    font-family:Candara Light;
+    font-family:'Quicksand', sans-serif;;
     font-size:20px;
     color: #CFDEE7;
     text-align:left;
@@ -48,21 +48,21 @@
   .cardTitle{
     height:10vh;
     color:#CFDEE7;
-    font-family:Candara Light;
+    font-family:'Quicksand', sans-serif;;
     font-size:25px;
   }
   .cardText{
     color:#CFDEE7;
-    font-family:Candara Light;
+    font-family:'Quicksand', sans-serif;;
   }
   .category{
     color:#6a7379;
-    font-family:Candara Light;
+    font-family:'Quicksand', sans-serif;;
     font-size:20px;
   }
   .cardStock{
     color:#CFDEE7;
-    font-family:Candara Light;
+    font-family:'Quicksand', sans-serif;;
     font-weight: bold;
     display:flex;
     justify-content:space-between;
@@ -75,7 +75,7 @@
   .price{
     display:flex;
     color:#CFDEE7;
-    font-family:Candara Light;
+    font-family:'Quicksand', sans-serif;;
   }
   img.icon{
     height:30px;

@@ -38,6 +38,7 @@
     height:auto;
     width:50%;
     color:white;
+    font-family: 'Quicksand', sans-serif;;
     font-size:15px;
     margin-left:auto;
     margin-right:auto;
@@ -46,26 +47,24 @@
   .lorem::first-letter{
     font-size:100px;
   }
-  
-  .pouet{
-    font-size:20px;
+  .pouet {
     color:white;
+    text-align:center;
+    font-family: 'Quicksand', sans-serif;;
     animation-duration: 10s;
-    animation-name: slidein;
+    animation-name: bigger;
     animation-iteration-count: infinite;
-    animation-direction:alternate;
+    animation-direction: alternate;
   }
-  
-  @keyframes slidein {
+
+  @keyframes bigger {
     from {
-      margin-left: 100%;
-      width: 100%;
+      text-align:'center';
+      font-size:0rem;
     }
-    
   
     to {
-      margin-left: 0%;
-      width: 100%;
+      font-size:2rem;
     }
   }
   

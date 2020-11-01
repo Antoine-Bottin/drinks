@@ -10,15 +10,15 @@
   .filters{
     width:auto;
     text-align:center;
-    margin-left: 20px;
-    margin-right:5vw;
-    font-size:30px;
+    margin-left: 1vw;
+    margin-right:2vw;
+
   }
   .title{
-    padding-left:50px;
+    margin-left:1vw;
     text-align:center;
     color:#CFDEE7;
-    font-size:20px;
+    font-size:1rem;
     font-family: 'Quicksand', sans-serif;;
     font-weight:thin;
   }
@@ -26,7 +26,7 @@
     display:flex;
     flex-direction:column;
     font-family:'Quicksand', sans-serif;;
-    font-size:20px;
+    font-size:1rem;
     color: #CFDEE7;
     text-align:left;
     margin-top:10px;
@@ -34,7 +34,6 @@
     margin-right:10px;
   } 
   .card{
-  
     margin-left:auto;
     margin-right:auto;
     margin-top:5vh;

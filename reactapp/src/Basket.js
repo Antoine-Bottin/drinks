@@ -13,7 +13,6 @@ import {Redirect} from 'react-router-dom'
 function Basket(props) {
     
     const articleId = props.articleId;
-    //var totalPrice = 134.9;
     var successOrder = "";
     var token = props.customerToken;
     console.log("TARTICLE ID",articleId)
@@ -82,7 +81,7 @@ function Basket(props) {
         
       };
 
-      /* Va effacer l'article selctionné dans le tableau d'achat en BDD*/ 
+      /* Va effacer l'article selctionné dans réduceur*/ 
      const handleClickTrash=(articleIdToDelete)=>{
          props.deleteArticleIdToBasket(articleIdToDelete);
          console.log("ID DE LARTICLE A SUPPRIMER", articleIdToDelete)

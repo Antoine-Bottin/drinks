@@ -28,12 +28,12 @@ function Shop(props) {
       console.log("ici========",articleTab)
       
         
-      var ginTab = articleTab.filter(gin=>gin.category ==="Gin")
-      var whiskyTab = articleTab.filter(whisky=>whisky.category ==="Whisky")
-      var armagnacTab = articleTab.filter(armagnac=>armagnac.category ==="Armagnac")
-      var cognacTab = articleTab.filter(cognac=>cognac.category ==="Cognac")
-      var rhumTab = articleTab.filter(rhum=>rhum.category ==="Rhum")
-      var calvadosTab = articleTab.filter(calvados=>calvados.category ==="Calvados")
+      var ginTab = articleTab.filter(alcohol=>alcohol.category ==="Gin")
+      var whiskyTab = articleTab.filter(alcohol=>alcohol.category ==="Whisky")
+      var armagnacTab = articleTab.filter(alcohol=>alcohol.category ==="Armagnac")
+      var cognacTab = articleTab.filter(alcohol=>alcohol.category ==="Cognac")
+      var rhumTab = articleTab.filter(alcohol=>alcohol.category ==="Rhum")
+      var calvadosTab = articleTab.filter(alcohol=>alcohol.category ==="Calvados")
 
 
       console.log("GINTAB3", ginTab)
@@ -82,14 +82,14 @@ function Shop(props) {
         shop.push(
         <Col  xs={12}  md={6} lg={4} xl={3}>
             <Card className='card' >
-                <CardImg className="cardImg" top width="100%" src={articleTab[i].picture} alt="Card image cap" />
+                <CardImg className="cardImg" top width="100%" src={refreshedArticleTab[i].picture} alt="Card image cap" />
                 <CardBody className="cardBody">
-                <CardTitle className="cardTitle">{articleTab[i].name}</CardTitle>
-                <CardSubtitle className='category'>{articleTab[i].category}</CardSubtitle>
-                <CardText className='cardText'>{articleTab[i].description}</CardText>
-                <CardSubtitle className="cardStock">Stock restant :<span className='cardStockNumber'>{articleTab[i].stock}</span> </CardSubtitle>
-                <h3 className="price">{articleTab[i].priceHT*1.20}€</h3>
-                <img className='icon' src='smart-cartBlue.svg' onClick={()=>handleClickBasket(articleTab[i]._id,articleTab[i].picture,articleTab[i].name, articleTab[i].category,articleTab[i].description,articleTab[i].stock,articleTab[i].priceHT,1)}></img><span>Add to Cart</span>
+                <CardTitle className="cardTitle">{refreshedArticleTab[i].name}</CardTitle>
+                <CardSubtitle className='category'>{refreshedArticleTab[i].category}</CardSubtitle>
+                <CardText className='cardText'>{refreshedArticleTab[i].description}</CardText>
+                <CardSubtitle className="cardStock">Stock restant :<span className='cardStockNumber'>{refreshedArticleTab[i].stock}</span> </CardSubtitle>
+                <h3 className="price">{refreshedArticleTab[i].priceHT*1.20}€</h3>
+                <img className='icon' src='smart-cartBlue.svg' onClick={()=>handleClickBasket(refreshedArticleTab[i]._id,refreshedArticleTab[i].picture,refreshedArticleTab[i].name, refreshedArticleTab[i].category,refreshedArticleTab[i].description,refreshedArticleTab[i].stock,refreshedArticleTab[i].priceHT,1)}></img><span>Add to Cart</span>
                 </CardBody>
             </Card>
         </Col>)
